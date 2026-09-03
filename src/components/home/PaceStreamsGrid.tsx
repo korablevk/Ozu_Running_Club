@@ -31,7 +31,7 @@ const STREAMS: StreamItem[] = [
     subtitle: "Coached 400m-1200m interval ladders, cadence drills, and lactic threshold.",
     pace: "Structured Lanes",
     distance: "6.0 - 8.0 KM",
-    image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
     href: "/events?type=track_interval",
   },
   {
@@ -40,7 +40,7 @@ const STREAMS: StreamItem[] = [
     subtitle: "Caddebostan coastline socials, Belgrad Forest trails, and marathon preparation.",
     pace: "4:45 - 5:30 /km",
     distance: "10.0 - 21.1 KM",
-    image: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80",
     href: "/events?type=city_long",
   },
 ];
