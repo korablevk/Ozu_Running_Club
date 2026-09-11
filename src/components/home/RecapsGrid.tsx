@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RECENT_RECAPS } from "@/lib/data";
-import { ArrowUpRight, Users, Navigation } from "lucide-react";
+import { ArrowUpRight, Navigation, Camera } from "lucide-react";
 
 export function RecapsGrid() {
   return (
@@ -11,7 +11,7 @@ export function RecapsGrid() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4">
           <div>
-            <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-semibold block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500 font-sans block mb-2">
               04 • Past Sessions & Gallery
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -21,79 +21,89 @@ export function RecapsGrid() {
 
           <Link
             href="/recaps"
-            className="text-xs font-mono uppercase font-bold tracking-telemetry text-neutral-700 hover:text-club-navy underline underline-offset-4 flex items-center gap-1.5"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-neutral-700 hover:text-club-navy transition-colors font-sans group"
           >
             <span>Explore All Recaps</span>
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
-        {/* 2-Column Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        {/* 2-Column Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {RECENT_RECAPS.map((recap) => (
-            <div
+            <article
               key={recap.id}
-              className="group relative rounded-2xl overflow-hidden bg-club-deepNavy border border-club-navy/60 flex flex-col justify-end p-6 sm:p-8 h-[440px] sm:h-[480px] text-white shadow-md transition-all duration-300 hover:shadow-xl hover:border-club-burgundy/50"
+              className="group flex flex-col justify-between"
             >
-              {/* Image */}
-              <div className="absolute inset-0 z-0">
+              {/* Header: Date, Dispatch Name & Quick Stats */}
+              <div className="mb-4">
+                <span className="text-xs font-semibold uppercase tracking-wider text-club-burgundy font-sans block mb-1.5">
+                  {recap.date} • {recap.eventName}
+                </span>
+                <Link href="/recaps" className="block group/title mb-2">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold font-sans tracking-tight text-asphalt-black group-hover/title:text-club-navy transition-colors leading-tight">
+                    {recap.title}
+                  </h3>
+                </Link>
+                <p className="text-xs font-mono text-neutral-500 tabular-nums">
+                  {recap.totalRunners} Runners · {recap.totalKm} KM Logged · {recap.avgPace} Avg
+                </p>
+              </div>
+
+              {/* Photo Container */}
+              <Link
+                href="/recaps"
+                className="block relative aspect-[16/10] rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200/80 mb-5 shadow-sm"
+              >
                 <Image
                   src={recap.coverImage}
                   alt={recap.title}
                   fill
-                  className="object-cover transition-transform duration-700 ease-spring group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy/95 via-black/40 to-transparent" />
-              </div>
-
-              {/* Header inside card */}
-              <div className="absolute top-6 left-6 right-6 z-10 flex items-center justify-between">
-                <span className="bg-club-deepNavy/70 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono font-medium text-white/90 border border-white/15">
-                  {recap.date}
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+                <span className="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-sm text-[11px] font-sans text-white/95 font-medium flex items-center gap-1.5">
+                  <Camera className="w-3 h-3 text-white/80" />
+                  <span>{recap.gallery?.length || 3} Photos</span>
                 </span>
-                <a
-                  href={recap.stravaClubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full bg-club-deepNavy/70 backdrop-blur-md border border-white/15 flex items-center justify-center text-white hover:text-club-burgundy transition-colors"
-                >
-                  <Navigation className="w-3.5 h-3.5 text-orange-500" />
-                </a>
-              </div>
+              </Link>
 
-              {/* Content */}
-              <div className="relative z-10 flex flex-col gap-3">
-                <span className="text-xs font-mono uppercase tracking-telemetry text-club-burgundy font-bold">
-                  {recap.eventName}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white leading-tight">
-                  {recap.title}
-                </h3>
+              {/* Runner Voice & Field Note */}
+              <div className="flex flex-col gap-3.5">
+                <blockquote className="text-sm text-neutral-600 italic leading-relaxed border-l-2 border-club-burgundy/40 pl-3.5">
+                  &ldquo;{recap.quote.text}&rdquo;
+                  <footer className="text-xs not-italic text-neutral-500 mt-1.5 font-sans font-medium">
+                    — {recap.quote.author}, {recap.quote.role}
+                  </footer>
+                </blockquote>
 
-                {/* Telemetry Bar */}
-                <div className="grid grid-cols-3 gap-2 py-2.5 px-3 bg-club-deepNavy/80 backdrop-blur-md rounded-xl border border-white/15 text-center font-mono text-xs mt-1">
-                  <div>
-                    <span className="text-[9px] uppercase text-neutral-400 block">RUNNERS</span>
-                    <span className="font-bold text-white flex items-center justify-center gap-1">
-                      <Users className="w-3 h-3 text-neutral-300" />
-                      {recap.totalRunners}
-                    </span>
-                  </div>
-                  <div className="border-x border-white/10">
-                    <span className="text-[9px] uppercase text-neutral-400 block">TOTAL KM</span>
-                    <span className="font-bold text-white">{recap.totalKm} KM</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] uppercase text-neutral-400 block">AVG PACE</span>
-                    <span className="font-bold text-white">{recap.avgPace}</span>
-                  </div>
+                {/* Footer Links */}
+                <div className="pt-3 flex items-center justify-between border-t border-neutral-100">
+                  <Link
+                    href="/recaps"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-club-navy hover:text-club-burgundy transition-colors font-sans"
+                  >
+                    <span>Read Dispatch & View Gallery</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+
+                  <a
+                    href={recap.stravaClubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-sans font-medium text-neutral-500 hover:text-orange-600 transition-colors"
+                  >
+                    <Navigation className="w-3.5 h-3.5 text-orange-500" />
+                    <span>Strava Club</span>
+                  </a>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
