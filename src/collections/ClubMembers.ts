@@ -1,8 +1,23 @@
-export const ClubMembersCollection = {
+import type { CollectionConfig } from "payload";
+
+export const ClubMembers: CollectionConfig = {
   slug: "club-members",
   admin: {
     useAsTitle: "fullName",
-    defaultColumns: ["fullName", "email", "faculty", "experienceLevel", "createdAt"],
+    defaultColumns: ["fullName", "email", "studentId", "status", "createdAt"],
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (data?.email && typeof data.email === "string") {
+          data.email = data.email.trim().toLowerCase();
+        }
+        if (data?.studentId && typeof data.studentId === "string") {
+          data.studentId = data.studentId.trim();
+        }
+        return data;
+      },
+    ],
   },
   fields: [
     {
@@ -15,11 +30,13 @@ export const ClubMembersCollection = {
       type: "email",
       required: true,
       unique: true,
+      index: true,
     },
     {
       name: "studentId",
       type: "text",
       required: true,
+      index: true,
     },
     {
       name: "phone",
@@ -34,12 +51,13 @@ export const ClubMembersCollection = {
     {
       name: "experienceLevel",
       type: "select",
+      required: true,
+      defaultValue: "beginner",
       options: [
         { label: "Couch to 5K (Beginner)", value: "beginner" },
         { label: "Regular 5-10K (Intermediate)", value: "intermediate" },
         { label: "Half / Full Marathon (Advanced)", value: "advanced" },
       ],
-      defaultValue: "beginner",
     },
     {
       name: "motivation",
@@ -48,12 +66,16 @@ export const ClubMembersCollection = {
     {
       name: "status",
       type: "select",
+      required: true,
+      defaultValue: "pending",
+      index: true,
       options: [
+        { label: "Pending Approval", value: "pending" },
         { label: "Active Member", value: "active" },
-        { label: "Alumni Member", value: "alumni" },
+        { label: "Rejected", value: "rejected" },
         { label: "Inactive", value: "inactive" },
+        { label: "Alumni", value: "alumni" },
       ],
-      defaultValue: "active",
     },
   ],
 };

@@ -68,6 +68,11 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    media: Media;
+    events: Event;
+    'club-members': ClubMember;
+    'event-registrations': EventRegistration;
+    partners: Partner;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,6 +81,11 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    'club-members': ClubMembersSelect<false> | ClubMembersSelect<true>;
+    'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -144,6 +154,139 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  slug: string;
+  eventType: 'campus_social' | 'track_interval' | 'city_long' | 'trail_nature' | 'race_competition';
+  description?: string | null;
+  coverImage?: (number | null) | Media;
+  date: string;
+  meetingPoint: string;
+  googleMapsUrl?: string | null;
+  registrationDeadline?: string | null;
+  distanceKm: number;
+  elevationGainM?: number | null;
+  targetPace?: string | null;
+  estimatedDuration?: string | null;
+  maxParticipants: number;
+  isRegistrationEnabled?: boolean | null;
+  status: 'scheduled' | 'completed' | 'cancelled';
+  isPublished?: boolean | null;
+  isFeatured?: boolean | null;
+  paceGroups?:
+    | {
+        name: string;
+        targetPace: string;
+        pacer: string;
+        capacity?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "club-members".
+ */
+export interface ClubMember {
+  id: number;
+  fullName: string;
+  email: string;
+  studentId: string;
+  phone: string;
+  faculty: string;
+  experienceLevel: 'beginner' | 'intermediate' | 'advanced';
+  motivation?: string | null;
+  status: 'pending' | 'active' | 'rejected' | 'inactive' | 'alumni';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event-registrations".
+ */
+export interface EventRegistration {
+  id: number;
+  event: number | Event;
+  member?: (number | null) | ClubMember;
+  fullName: string;
+  email: string;
+  studentId?: string | null;
+  phone?: string | null;
+  paceGroup?: string | null;
+  status: 'confirmed' | 'waitlist' | 'cancelled' | 'attended' | 'no_show';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  name: string;
+  tier: 'title_gear' | 'university' | 'trail_alliance' | 'nutrition';
+  websiteUrl: string;
+  perkDescription: string;
+  discountCode?: string | null;
+  logo?: (number | null) | Media;
+  isPublished?: boolean | null;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -165,10 +308,31 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'club-members';
+        value: number | ClubMember;
+      } | null)
+    | ({
+        relationTo: 'event-registrations';
+        value: number | EventRegistration;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: number | Partner;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -234,6 +398,142 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  eventType?: T;
+  description?: T;
+  coverImage?: T;
+  date?: T;
+  meetingPoint?: T;
+  googleMapsUrl?: T;
+  registrationDeadline?: T;
+  distanceKm?: T;
+  elevationGainM?: T;
+  targetPace?: T;
+  estimatedDuration?: T;
+  maxParticipants?: T;
+  isRegistrationEnabled?: T;
+  status?: T;
+  isPublished?: T;
+  isFeatured?: T;
+  paceGroups?:
+    | T
+    | {
+        name?: T;
+        targetPace?: T;
+        pacer?: T;
+        capacity?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "club-members_select".
+ */
+export interface ClubMembersSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  studentId?: T;
+  phone?: T;
+  faculty?: T;
+  experienceLevel?: T;
+  motivation?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event-registrations_select".
+ */
+export interface EventRegistrationsSelect<T extends boolean = true> {
+  event?: T;
+  member?: T;
+  fullName?: T;
+  email?: T;
+  studentId?: T;
+  phone?: T;
+  paceGroup?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  tier?: T;
+  websiteUrl?: T;
+  perkDescription?: T;
+  discountCode?: T;
+  logo?: T;
+  isPublished?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

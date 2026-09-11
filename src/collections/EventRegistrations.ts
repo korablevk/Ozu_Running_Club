@@ -1,8 +1,56 @@
-export const EventRegistrationsCollection = {
+import type { CollectionConfig } from "payload";
+import { APIError } from "payload";
+
+export const EventRegistrations: CollectionConfig = {
   slug: "event-registrations",
   admin: {
     useAsTitle: "fullName",
-    defaultColumns: ["fullName", "email", "event", "paceGroup", "createdAt"],
+    defaultColumns: ["fullName", "email", "event", "paceGroup", "status", "createdAt"],
+  },
+  hooks: {
+    beforeValidate: [
+      async ({ data, req, operation, originalDoc }) => {
+        if (!data) return data;
+
+        if (data.email && typeof data.email === "string") {
+          data.email = data.email.trim().toLowerCase();
+        }
+        if (data.studentId && typeof data.studentId === "string") {
+          data.studentId = data.studentId.trim();
+        }
+
+        // Duplicate invariant: one active registration per event + normalized email
+        const targetEvent = data.event || originalDoc?.event;
+        const targetEmail = data.email || originalDoc?.email;
+        const targetStatus = data.status || originalDoc?.status || "confirmed";
+
+        // Only enforce if registration is active (not cancelled)
+        if (targetEvent && targetEmail && targetStatus !== "cancelled") {
+          const eventId = typeof targetEvent === "object" ? targetEvent.id : targetEvent;
+          const currentDocId = originalDoc?.id;
+
+          const existing = await req.payload.find({
+            collection: "event-registrations",
+            where: {
+              and: [
+                { event: { equals: eventId } },
+                { email: { equals: targetEmail } },
+                { status: { not_equals: "cancelled" } },
+                ...(currentDocId ? [{ id: { not_equals: currentDocId } }] : []),
+              ],
+            },
+            limit: 1,
+            depth: 0,
+          });
+
+          if (existing.totalDocs > 0) {
+            throw new APIError(`An active registration already exists for ${targetEmail} for this event.`, 400);
+          }
+        }
+
+        return data;
+      },
+    ],
   },
   fields: [
     {
@@ -10,6 +58,13 @@ export const EventRegistrationsCollection = {
       type: "relationship",
       relationTo: "events",
       required: true,
+      index: true,
+    },
+    {
+      name: "member",
+      type: "relationship",
+      relationTo: "club-members",
+      index: true,
     },
     {
       name: "fullName",
@@ -20,6 +75,7 @@ export const EventRegistrationsCollection = {
       name: "email",
       type: "email",
       required: true,
+      index: true,
     },
     {
       name: "studentId",
@@ -36,12 +92,16 @@ export const EventRegistrationsCollection = {
     {
       name: "status",
       type: "select",
+      required: true,
+      defaultValue: "confirmed",
+      index: true,
       options: [
         { label: "Confirmed", value: "confirmed" },
-        { label: "Attended", value: "attended" },
+        { label: "Waitlist", value: "waitlist" },
         { label: "Cancelled", value: "cancelled" },
+        { label: "Attended", value: "attended" },
+        { label: "No Show", value: "no_show" },
       ],
-      defaultValue: "confirmed",
     },
   ],
 };
