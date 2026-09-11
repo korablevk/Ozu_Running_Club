@@ -59,7 +59,7 @@ export function PaceStreamsGrid() {
   };
 
   return (
-    <section id="pace-groups" className="py-16 sm:py-24 bg-white">
+    <section id="pace-groups" className="pt-14 pb-16 sm:pt-20 sm:pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">

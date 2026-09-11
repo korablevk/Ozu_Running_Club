@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 
 export function RunnerStories() {
   return (
-    <section className="py-16 sm:py-24 bg-canvas-subtle border-y border-neutral-200">
+    <section className="py-20 sm:py-28 bg-canvas-subtle border-t border-neutral-200/60">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Authentic Portrait */}

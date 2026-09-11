@@ -13,7 +13,7 @@ export function DisciplineSplit() {
   const activeDiscipline = DISCIPLINES[activeIndex];
 
   return (
-    <section id="disciplines" className="py-16 sm:py-24 bg-canvas-subtle border-y border-neutral-200">
+    <section id="disciplines" className="py-16 sm:py-20 bg-canvas-subtle border-t border-neutral-200/60">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="mb-10 sm:mb-16">

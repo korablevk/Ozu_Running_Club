@@ -7,7 +7,7 @@ export function PartnersSection() {
   const secondaryPartners = PARTNERS.filter((p) => p.id !== featuredPartner.id);
 
   return (
-    <section className="py-16 sm:py-24 bg-canvas-subtle border-y border-neutral-200">
+    <section className="pt-12 pb-16 sm:pt-16 sm:pb-20 bg-canvas-subtle border-t border-neutral-200/60">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="mb-10 sm:mb-14">

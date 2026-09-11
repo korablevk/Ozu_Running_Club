@@ -27,7 +27,7 @@ export function UpcomingRunsCarousel() {
   };
 
   return (
-    <section id="upcoming-runs" className="py-16 sm:py-24 bg-white">
+    <section id="upcoming-runs" className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header with Desktop Controls */}
         <div className="flex items-end justify-between mb-8 sm:mb-12">
