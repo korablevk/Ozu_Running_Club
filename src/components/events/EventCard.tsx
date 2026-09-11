@@ -7,7 +7,7 @@ import { RunningEvent } from "@/lib/data";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { RSVPModal } from "./RSVPModal";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, ArrowRight } from "lucide-react";
 
 interface EventCardProps {
   event: RunningEvent;
@@ -22,10 +22,10 @@ export function EventCard({ event, className = "" }: EventCardProps) {
   return (
     <>
       <div
-        className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-club-deepNavy border border-club-navy/60 text-white transition-all duration-300 hover:border-club-burgundy/60 hover:shadow-xl ${className}`}
+        className={`group relative flex flex-col justify-between overflow-hidden rounded-xl bg-club-deepNavy border border-white/10 text-white transition-all duration-300 hover:border-club-burgundy/60 hover:shadow-2xl ${className}`}
         style={{ minHeight: "440px" }}
       >
-        {/* Background Photography with dark gradient overlay */}
+        {/* Background Photography with smooth dark gradient overlay */}
         <div className="absolute inset-0 z-0">
           <Image
             src={event.coverImage}
@@ -34,36 +34,33 @@ export function EventCard({ event, className = "" }: EventCardProps) {
             className="object-cover transition-transform duration-700 ease-spring group-hover:scale-105"
             sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 30vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy via-club-deepNavy/60 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy via-club-deepNavy/70 to-black/30" />
         </div>
 
-        {/* Card Header Tags */}
-        <div className="relative z-10 p-5 flex items-start justify-between gap-2">
+        {/* Card Header: Type Badge & Spots Indicator */}
+        <div className="relative z-10 p-6 flex items-start justify-between gap-2">
           <Badge variant={event.isFeatured ? "burgundy" : "navy"} size="sm" pulse={event.isFeatured}>
             {event.typeLabel}
           </Badge>
-          <div className="bg-club-deepNavy/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[11px] font-mono font-medium text-white/90 border border-white/15 flex items-center gap-1.5">
+          <div className="bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-medium text-white/90 border border-white/15 flex items-center gap-1.5">
             <Users className="w-3 h-3 text-neutral-300" />
-            <span>{spotsLeft > 0 ? `${spotsLeft} spots` : "Full"}</span>
+            <span>{spotsLeft > 0 ? `${spotsLeft} spots left` : "Full"}</span>
           </div>
         </div>
 
-        {/* Card Content & Telemetry */}
-        <div className="relative z-10 p-5 pt-0 flex flex-col gap-3">
-          {/* Date & Meeting point */}
-          <div className="flex flex-col gap-1">
-            <div className="text-xs font-mono uppercase tracking-telemetry text-club-crimson font-bold">
-              {event.displayDate} • {event.time}
-            </div>
-            <Link href={`/events/${event.slug}`} className="group-hover:text-white/90 transition-colors">
-              <h3 className="text-xl font-bold font-sans tracking-tight text-white leading-tight">
-                {event.title}
-              </h3>
-            </Link>
-            <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed">
-              {event.subtitle}
-            </p>
+        {/* Card Content: Date, Title, Location & RSVP Action */}
+        <div className="relative z-10 p-6 flex flex-col gap-3">
+          {/* Date & Time */}
+          <div className="text-xs uppercase tracking-wider text-club-crimson font-bold font-mono">
+            {event.displayDate} • {event.time}
           </div>
+
+          {/* Event Title */}
+          <Link href={`/events/${event.slug}`} className="group/title block">
+            <h3 className="text-2xl font-black font-sans tracking-tight text-white leading-tight group-hover/title:text-neutral-200 transition-colors">
+              {event.title}
+            </h3>
+          </Link>
 
           {/* Meeting Point */}
           <div className="flex items-center gap-1.5 text-xs text-neutral-300">
@@ -71,43 +68,25 @@ export function EventCard({ event, className = "" }: EventCardProps) {
             <span className="truncate">{event.meetingPoint}</span>
           </div>
 
-          {/* Telemetry Row (On.com inspired monospace data) */}
-          <div className="grid grid-cols-3 gap-2 py-2.5 px-3 bg-club-deepNavy/80 backdrop-blur-md rounded-xl border border-white/15 text-center font-mono">
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-neutral-400 block">
-                DIST
-              </span>
-              <span className="text-xs font-bold text-white">{event.distanceKm} KM</span>
-            </div>
-            <div className="border-x border-white/10">
-              <span className="text-[9px] uppercase tracking-wider text-neutral-400 block">
-                PACE
-              </span>
-              <span className="text-xs font-bold text-white">{event.targetPace.split("-")[0]}</span>
-            </div>
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-neutral-400 block">
-                ELEV
-              </span>
-              <span className="text-xs font-bold text-white">+{event.elevationGainM}M</span>
-            </div>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex items-center gap-2 pt-1">
+          {/* Card Footer: High-contrast RSVP CTA */}
+          <div className="mt-4 pt-4 border-t border-white/10 flex items-center gap-2">
             <Button
               variant="crimson"
               size="sm"
-              onClick={() => setIsModalOpen(true)}
-              className="flex-1 font-bold tracking-tight text-xs h-10 shadow-sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsModalOpen(true);
+              }}
+              className="flex-1 font-bold tracking-tight text-xs h-10 shadow-md flex items-center justify-center gap-1.5"
             >
-              RSVP Now
+              <span>RSVP for Run</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Button>
             <Button
               variant="outline-white"
               size="sm"
               href={`/events/${event.slug}`}
-              className="px-3 text-xs h-10 border-white/30 hover:border-white"
+              className="text-xs h-10 border-white/20 hover:border-white text-neutral-300 hover:text-white px-3.5"
             >
               Details
             </Button>
@@ -123,3 +102,4 @@ export function EventCard({ event, className = "" }: EventCardProps) {
     </>
   );
 }
+

@@ -29,10 +29,10 @@ export function UpcomingRunsCarousel() {
   return (
     <section id="upcoming-runs" className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        {/* Section Header with Desktop Arrows matching On.com */}
+        {/* Section Header with Desktop Controls */}
         <div className="flex items-end justify-between mb-8 sm:mb-12">
           <div>
-            <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-semibold block mb-2">
+            <span className="text-xs uppercase tracking-wider text-neutral-500 font-semibold block mb-2 font-sans">
               03 • Schedule & RSVP
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -43,9 +43,9 @@ export function UpcomingRunsCarousel() {
           <div className="flex items-center gap-6">
             <Link
               href="/events"
-              className="text-xs font-mono uppercase font-bold tracking-telemetry text-neutral-700 hover:text-club-navy underline underline-offset-4"
+              className="text-xs uppercase font-bold tracking-wider text-neutral-700 hover:text-club-navy transition-colors flex items-center gap-1 font-sans underline underline-offset-4"
             >
-              View All ({RUNNING_EVENTS.length})
+              <span>View All ({RUNNING_EVENTS.length})</span>
             </Link>
 
             {/* Desktop Left/Right Controls */}
@@ -74,7 +74,7 @@ export function UpcomingRunsCarousel() {
         <div
           ref={carouselRef}
           onScroll={handleScroll}
-          className="flex gap-5 overflow-x-auto no-scrollbar touch-scroll -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0 py-2"
+          className="flex gap-6 overflow-x-auto no-scrollbar touch-scroll -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0 py-2"
         >
           {RUNNING_EVENTS.map((event) => (
             <div
@@ -86,7 +86,7 @@ export function UpcomingRunsCarousel() {
           ))}
         </div>
 
-        {/* Carousel Progress Line Indicator (matching On.com reference) */}
+        {/* Carousel Progress Line Indicator */}
         <div className="mt-8 flex items-center justify-between">
           <div className="w-40 sm:w-56 h-[2px] bg-neutral-200 rounded-full overflow-hidden">
             <div
@@ -98,7 +98,7 @@ export function UpcomingRunsCarousel() {
             />
           </div>
 
-          <span className="text-[11px] font-mono text-neutral-500 uppercase tracking-telemetry">
+          <span className="text-[11px] text-neutral-500 uppercase tracking-wider font-sans font-medium">
             Swipe to explore runs
           </span>
         </div>
