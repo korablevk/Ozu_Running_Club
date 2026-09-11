@@ -10,7 +10,7 @@ export function RunnerStories() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Authentic Portrait */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-2xl overflow-hidden shadow-lg h-[440px] sm:h-[500px] border border-neutral-200">
+            <div className="relative rounded-xl overflow-hidden shadow-lg h-[440px] sm:h-[500px] border border-neutral-200/80">
               <Image
                 src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1000&q=80"
                 alt="ÖzÜ Student Runner"
@@ -21,14 +21,14 @@ export function RunnerStories() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white">
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-300 block font-semibold">
+                  <span className="text-xs uppercase tracking-wider text-neutral-300 block font-semibold font-sans">
                     Athlete Spotlight
                   </span>
                   <span className="text-lg font-bold font-sans">
                     Derin K. • Class of &apos;27
                   </span>
                 </div>
-                <div className="bg-club-deepNavy/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 text-xs font-mono text-neutral-200">
+                <div className="bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-xs text-neutral-200 font-sans">
                   0 to 21.1 KM in 8 Months
                 </div>
               </div>
@@ -37,9 +37,9 @@ export function RunnerStories() {
 
           {/* Right Column: Editorial Quote & Narrative */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            <Badge variant="navy" size="sm" className="self-start mb-6">
-              Voices of ÖzÜ
-            </Badge>
+            <span className="text-xs uppercase tracking-wider text-club-burgundy font-bold font-sans block mb-4">
+              Voices of ÖzÜ • Athlete Story
+            </span>
 
             <Quote className="w-10 h-10 text-neutral-300 mb-4" />
 

@@ -64,7 +64,7 @@ export function PaceStreamsGrid() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
           <div>
-            <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-semibold block mb-2">
+            <span className="text-xs uppercase tracking-wider text-neutral-500 font-semibold block mb-2 font-sans">
               01 • Find Your Stride
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -80,13 +80,13 @@ export function PaceStreamsGrid() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex lg:grid lg:grid-cols-3 gap-5 overflow-x-auto no-scrollbar touch-scroll -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0"
+          className="flex lg:grid lg:grid-cols-3 gap-6 overflow-x-auto no-scrollbar touch-scroll -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0"
         >
           {STREAMS.map((item) => (
             <Link
               key={item.id}
               href={item.href}
-              className="group relative flex-shrink-0 w-[82vw] sm:w-[55vw] lg:w-auto h-[480px] sm:h-[520px] rounded-2xl overflow-hidden bg-club-deepNavy border border-neutral-200/80 shadow-sm flex flex-col justify-end p-6 text-white touch-snap-item transition-transform duration-300 hover:shadow-lg hover:border-club-burgundy/40"
+              className="group relative flex-shrink-0 w-[82vw] sm:w-[55vw] lg:w-auto h-[480px] sm:h-[520px] rounded-xl overflow-hidden bg-club-deepNavy border border-white/10 shadow-sm flex flex-col justify-end p-7 text-white touch-snap-item transition-all duration-300 hover:shadow-xl hover:border-club-burgundy/50"
             >
               {/* Image */}
               <div className="absolute inset-0 z-0">
@@ -101,11 +101,9 @@ export function PaceStreamsGrid() {
               </div>
 
               {/* Card Meta & Content */}
-              <div className="relative z-10 flex flex-col gap-2">
-                <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-telemetry text-white/90 font-bold bg-club-deepNavy/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-club-burgundy/30 self-start">
-                  <span className="text-club-burgundy font-bold">{item.distance}</span>
-                  <span className="text-white/40">•</span>
-                  <span>{item.pace}</span>
+              <div className="relative z-10 flex flex-col gap-2.5">
+                <div className="text-xs uppercase tracking-wider font-mono text-club-crimson font-bold">
+                  {item.distance} <span className="text-white/40 font-normal">•</span> {item.pace}
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white flex items-center justify-between">

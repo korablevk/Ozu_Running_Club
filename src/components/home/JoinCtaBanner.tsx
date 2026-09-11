@@ -10,7 +10,7 @@ export function JoinCtaBanner() {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-telemetry text-white mb-6 border border-white/20 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs uppercase tracking-wider text-white mb-6 border border-white/20 shadow-sm font-sans font-medium">
             <Sparkles className="w-3.5 h-3.5 text-white" />
             <span>Membership Enrollment Open</span>
           </div>
@@ -25,7 +25,7 @@ export function JoinCtaBanner() {
             exclusive partner discounts from Runaway Zone, and shared race journeys.
           </p>
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono text-white/90">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-sans text-white/90 font-medium">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white shrink-0" />
               <span>100% Free For Students</span>

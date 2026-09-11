@@ -17,7 +17,7 @@ export function DisciplineSplit() {
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="mb-10 sm:mb-16">
-          <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-semibold block mb-2">
+          <span className="text-xs uppercase tracking-wider text-neutral-500 font-semibold block mb-2 font-sans">
             02 • Training Hub
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -38,7 +38,7 @@ export function DisciplineSplit() {
                     type="button"
                     onMouseEnter={() => setActiveIndex(idx)}
                     onClick={() => setActiveIndex(idx)}
-                    className={`group text-left py-4 px-4 sm:px-6 rounded-2xl transition-all duration-200 flex items-center justify-between cursor-pointer ${
+                    className={`group text-left py-4 px-4 sm:px-6 rounded-xl transition-all duration-200 flex items-center justify-between cursor-pointer ${
                       isActive
                         ? "bg-white shadow-md border-l-4 border-l-club-navy border-y border-r border-neutral-200/80"
                         : "hover:bg-neutral-200/50"
@@ -84,9 +84,9 @@ export function DisciplineSplit() {
             </div>
           </div>
 
-          {/* Right Column: Dynamic Media & Telemetry Showcase */}
+          {/* Right Column: Dynamic Media Showcase */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-2xl overflow-hidden bg-club-deepNavy border border-neutral-800 shadow-xl h-[480px] sm:h-[540px] flex flex-col justify-between p-6 sm:p-8 text-white">
+            <div className="relative rounded-xl overflow-hidden bg-club-deepNavy border border-white/10 shadow-xl h-[480px] sm:h-[540px] flex flex-col justify-between p-7 sm:p-8 text-white">
               {/* Dynamic Image with Smooth Fade */}
               <div className="absolute inset-0 z-0">
                 <Image
@@ -105,12 +105,12 @@ export function DisciplineSplit() {
                 <Badge variant="burgundy" size="sm">
                   {activeDiscipline.badge}
                 </Badge>
-                <span className="text-xs font-mono uppercase tracking-telemetry text-white/90 bg-club-deepNavy/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                <span className="text-xs font-mono uppercase tracking-telemetry text-white/90 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
                   {activeDiscipline.distanceRange}
                 </span>
               </div>
 
-              {/* Card Bottom Details & Telemetry */}
+              {/* Card Bottom Details & Metadata */}
               <div className="relative z-10 flex flex-col gap-4">
                 <div>
                   <h4 className="text-2xl sm:text-3xl font-extrabold font-sans tracking-tight text-white">
@@ -121,15 +121,16 @@ export function DisciplineSplit() {
                   </p>
                 </div>
 
-                {/* Telemetry Chips */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono bg-club-deepNavy/80 backdrop-blur-md p-3.5 rounded-xl border border-white/10">
-                  <div className="flex items-center gap-2">
+                {/* Inline Metadata Strip — no nested box */}
+                <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-neutral-300 border-t border-white/10 pt-3">
+                  <div className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-club-plum shrink-0" />
-                    <span className="truncate">{activeDiscipline.scheduleDay}</span>
+                    <span>{activeDiscipline.scheduleDay}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <span className="text-white/20 hidden sm:inline">•</span>
+                  <div className="flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-club-plum shrink-0" />
-                    <span className="truncate">{activeDiscipline.location}</span>
+                    <span>{activeDiscipline.location}</span>
                   </div>
                 </div>
 
