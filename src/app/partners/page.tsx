@@ -19,7 +19,7 @@ export default function PartnersPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Header */}
           <div className="py-8 sm:py-14 border-b border-neutral-200">
-            <Badge variant="volt" size="sm" className="mb-3">
+            <Badge variant="burgundy" size="sm" className="mb-3">
               Partnership & Perks
             </Badge>
             <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -32,14 +32,14 @@ export default function PartnersPage() {
 
           {/* Featured Sponsor Spotlight: Runaway Zone */}
           <div className="py-12 sm:py-16">
-            <div className="bg-asphalt-black text-white rounded-3xl p-8 sm:p-12 border border-neutral-800 shadow-2xl relative overflow-hidden">
-              {/* Subtle Volt accent glow */}
-              <div className="absolute -top-24 -right-24 w-96 h-96 bg-volt/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="bg-club-deepNavy text-white rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+              {/* Subtle Plum accent glow */}
+              <div className="absolute -top-24 -right-24 w-96 h-96 bg-club-plum/20 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 <div className="lg:col-span-7 space-y-6">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono uppercase tracking-telemetry text-asphalt-black bg-volt px-3 py-1 rounded font-bold">
+                    <span className="text-xs font-mono uppercase tracking-telemetry text-white bg-club-burgundy px-3 py-1 rounded font-bold">
                       Official Title Gear Partner
                     </span>
                     <span className="text-xs font-mono text-neutral-400">
@@ -57,20 +57,20 @@ export default function PartnersPage() {
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                    <div className="bg-neutral-900 p-4 rounded-xl border border-neutral-800">
-                      <Tag className="w-5 h-5 text-volt mb-2" />
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                      <Tag className="w-5 h-5 text-club-crimson mb-2" />
                       <span className="text-xs font-bold block text-white">20% Gear Discount</span>
                       <span className="text-[11px] text-neutral-400">Code: OZU20 on checkout</span>
                     </div>
 
-                    <div className="bg-neutral-900 p-4 rounded-xl border border-neutral-800">
-                      <ShoppingBag className="w-5 h-5 text-volt mb-2" />
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                      <ShoppingBag className="w-5 h-5 text-white mb-2" />
                       <span className="text-xs font-bold block text-white">Custom Club Singlet</span>
                       <span className="text-[11px] text-neutral-400">Official ÖzÜ RC race kit</span>
                     </div>
 
-                    <div className="bg-neutral-900 p-4 rounded-xl border border-neutral-800">
-                      <Calendar className="w-5 h-5 text-volt mb-2" />
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                      <Calendar className="w-5 h-5 text-white mb-2" />
                       <span className="text-xs font-bold block text-white">Joint Events Hub</span>
                       <span className="text-[11px] text-neutral-400">Shared Istanbul races</span>
                     </div>
@@ -81,7 +81,7 @@ export default function PartnersPage() {
                       href="https://runawayzone.com/tr/etkinlikler"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-volt text-asphalt-black font-extrabold text-sm hover:bg-volt-hover transition-colors shadow-md"
+                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-club-crimson text-white font-extrabold text-sm hover:bg-club-crimson/90 transition-colors shadow-md"
                     >
                       <span>Explore Runaway Zone Events</span>
                       <ArrowUpRight className="w-4 h-4" />
@@ -128,7 +128,7 @@ export default function PartnersPage() {
               <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono uppercase tracking-telemetry text-ozu-blue font-bold">
+                    <span className="text-xs font-mono uppercase tracking-telemetry text-club-navy font-bold">
                       University Directorate
                     </span>
                     <ShieldCheck className="w-5 h-5 text-emerald-600" />
@@ -190,7 +190,7 @@ export default function PartnersPage() {
               </div>
               <a
                 href="mailto:running@ozu.edu.tr"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-asphalt-black text-white text-sm font-bold hover:bg-neutral-800 transition-colors shrink-0 shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-club-deepNavy text-white text-sm font-bold hover:bg-club-navy transition-colors shrink-0 shadow-sm"
               >
                 <Mail className="w-4 h-4" />
                 <span>Contact Athletics Board</span>

@@ -43,7 +43,7 @@ export function UpcomingRunsCarousel() {
           <div className="flex items-center gap-6">
             <Link
               href="/events"
-              className="text-xs font-mono uppercase font-bold tracking-telemetry text-neutral-700 hover:text-asphalt-black underline underline-offset-4"
+              className="text-xs font-mono uppercase font-bold tracking-telemetry text-neutral-700 hover:text-club-navy underline underline-offset-4"
             >
               View All ({RUNNING_EVENTS.length})
             </Link>
@@ -54,7 +54,7 @@ export function UpcomingRunsCarousel() {
                 type="button"
                 onClick={() => scroll("left")}
                 aria-label="Previous runs"
-                className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-700 hover:border-asphalt-black hover:text-asphalt-black transition-colors"
+                className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-700 hover:border-club-navy hover:text-club-navy transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
@@ -62,7 +62,7 @@ export function UpcomingRunsCarousel() {
                 type="button"
                 onClick={() => scroll("right")}
                 aria-label="Next runs"
-                className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-700 hover:border-asphalt-black hover:text-asphalt-black transition-colors"
+                className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-700 hover:border-club-navy hover:text-club-navy transition-colors"
               >
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -90,7 +90,7 @@ export function UpcomingRunsCarousel() {
         <div className="mt-8 flex items-center justify-between">
           <div className="w-40 sm:w-56 h-[2px] bg-neutral-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-asphalt-black transition-all duration-150 rounded-full"
+              className="h-full bg-club-deepNavy transition-all duration-150 rounded-full"
               style={{
                 width: "35%",
                 transform: `translateX(${scrollProgress * 180}%)`,

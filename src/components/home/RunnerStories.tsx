@@ -21,14 +21,14 @@ export function RunnerStories() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white">
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-telemetry text-volt block">
+                  <span className="text-xs font-mono uppercase tracking-telemetry text-neutral-300 block font-semibold">
                     Athlete Spotlight
                   </span>
                   <span className="text-lg font-bold font-sans">
                     Derin K. • Class of &apos;27
                   </span>
                 </div>
-                <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 text-xs font-mono">
+                <div className="bg-club-deepNavy/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 text-xs font-mono text-neutral-200">
                   0 to 21.1 KM in 8 Months
                 </div>
               </div>
@@ -43,7 +43,7 @@ export function RunnerStories() {
 
             <Quote className="w-10 h-10 text-neutral-300 mb-4" />
 
-            <blockquote className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-asphalt-black leading-snug">
+            <blockquote className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-ink leading-snug">
               &ldquo;I thought running at university would just be cardio on a treadmill. 
               ÖzÜ Running Club transformed it into a ritual of sunrise miles, mental clarity before exams, 
               and a crew that cheers for you whether you run a 4-minute pace or a 7-minute pace.&rdquo;
@@ -52,15 +52,15 @@ export function RunnerStories() {
             <div className="mt-8 pt-6 border-t border-neutral-200 grid grid-cols-3 gap-4 text-center font-mono">
               <div>
                 <span className="text-[10px] uppercase text-neutral-500 block">FIRST RUN</span>
-                <span className="text-sm sm:text-base font-bold text-asphalt-black">2.4 KM</span>
+                <span className="text-sm sm:text-base font-bold text-ink">2.4 KM</span>
               </div>
               <div className="border-x border-neutral-200">
                 <span className="text-[10px] uppercase text-neutral-500 block">CURRENT PR</span>
-                <span className="text-sm sm:text-base font-bold text-ozu-blue">1:48:12 (Half)</span>
+                <span className="text-sm sm:text-base font-bold text-club-navy">1:48:12 (Half)</span>
               </div>
               <div>
                 <span className="text-[10px] uppercase text-neutral-500 block">DISCIPLINE</span>
-                <span className="text-sm sm:text-base font-bold text-asphalt-black">Tempo Group B</span>
+                <span className="text-sm sm:text-base font-bold text-ink">Tempo Group B</span>
               </div>
             </div>
           </div>

@@ -28,8 +28,8 @@ export function PartnersSection() {
                 key={partner.id}
                 className={`relative rounded-2xl p-6 sm:p-8 flex flex-col justify-between border transition-all duration-300 hover:shadow-lg ${
                   isRunaway
-                    ? "bg-asphalt-black text-white border-neutral-800"
-                    : "bg-white text-asphalt-black border-neutral-200"
+                    ? "bg-club-deepNavy text-white border-club-navy/60 hover:border-club-burgundy/50"
+                    : "bg-white text-ink border-neutral-200"
                 }`}
               >
                 <div>
@@ -37,7 +37,7 @@ export function PartnersSection() {
                     <span
                       className={`text-[10px] font-mono uppercase tracking-telemetry font-bold px-2.5 py-1 rounded ${
                         isRunaway
-                          ? "bg-volt text-asphalt-black"
+                          ? "bg-club-burgundy text-white"
                           : "bg-neutral-100 text-neutral-700"
                       }`}
                     >
@@ -75,8 +75,8 @@ export function PartnersSection() {
                 <div className="mt-8 pt-4 border-t border-current/10 flex items-center justify-between">
                   {partner.discountCode ? (
                     <div className="flex items-center gap-1.5 text-xs font-mono">
-                      <Tag className="w-3.5 h-3.5 text-volt" />
-                      <span className="font-bold text-volt">CODE: {partner.discountCode}</span>
+                      <Tag className="w-3.5 h-3.5 text-club-burgundy" />
+                      <span className="font-bold text-club-burgundy">CODE: {partner.discountCode}</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-1.5 text-xs font-mono text-neutral-500">
@@ -90,7 +90,7 @@ export function PartnersSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`text-xs font-bold font-sans underline underline-offset-4 ${
-                      isRunaway ? "text-white hover:text-volt" : "text-asphalt-black hover:opacity-75"
+                      isRunaway ? "text-white hover:text-club-burgundy" : "text-ink hover:opacity-75"
                     }`}
                   >
                     Visit Partner

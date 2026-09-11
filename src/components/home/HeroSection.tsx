@@ -17,12 +17,12 @@ export function HeroSection() {
           alt="ÖzÜ Running Club Athletes"
           fill
           priority
-          className="object-cover object-center brightness-[0.78]"
+          className="object-cover object-center brightness-[0.75]"
           sizes="100vw"
         />
-        {/* Subtle cinematic gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30" />
+        {/* Subtle Navy → Plum → Crimson brand atmosphere overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-club-deepNavy/80 via-club-plum/20 to-club-crimson/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy/95 via-black/40 to-black/30" />
       </div>
 
       {/* Top Spacer for sticky header */}
@@ -31,13 +31,13 @@ export function HeroSection() {
       {/* Main Hero Content (Bottom-Left Aligned matching On.com reference) */}
       <div className="relative z-10 max-w-7xl mx-auto w-full px-6 sm:px-8 pb-12 sm:pb-16 flex flex-col items-start">
         {/* Next Run Live Pill Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5 transition-all hover:bg-white/15">
+        <div className="inline-flex items-center gap-2 bg-club-deepNavy/80 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5 transition-all hover:border-club-burgundy/60 shadow-sm">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-club-crimson opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-club-crimson"></span>
           </span>
-          <span className="text-xs font-mono uppercase tracking-telemetry text-volt font-bold">
-            Next Run: Thursday 07:30 AM
+          <span className="text-xs font-mono uppercase tracking-telemetry text-white font-bold">
+            Next Run: <span className="text-neutral-200">Thursday 07:30 AM</span>
           </span>
           <span className="text-neutral-400 text-xs font-mono hidden sm:inline">
             • Çekmeköy Campus Loop
@@ -46,8 +46,8 @@ export function HeroSection() {
 
         {/* H1 Headline */}
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold font-sans tracking-tight text-white max-w-3xl leading-[1.05]">
-          RUN WITH <br className="hidden sm:inline" />
-          <span className="text-white">THE PACK.</span>
+          WE MOVE <br className="hidden sm:inline" />
+          <span className="text-white">TOGETHER.</span>
         </h1>
 
         {/* Subtitle */}
@@ -61,9 +61,9 @@ export function HeroSection() {
         <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <Button
             href="/#upcoming-runs"
-            variant="volt"
+            variant="crimson"
             size="lg"
-            className="w-full sm:w-auto font-extrabold text-sm sm:text-base tracking-tight"
+            className="w-full sm:w-auto font-extrabold text-sm sm:text-base tracking-tight shadow-md"
           >
             Join Next Run
           </Button>
@@ -79,7 +79,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom Telemetry Bar */}
-      <div className="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-md py-4 px-6 sm:px-8">
+      <div className="relative z-10 w-full border-t border-white/15 bg-club-deepNavy/85 backdrop-blur-md py-4 px-6 sm:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
           <div className="flex items-center gap-6 sm:gap-10">
             <div>
@@ -88,7 +88,7 @@ export function HeroSection() {
             </div>
             <div className="border-l border-white/20 pl-6 sm:pl-10">
               <span className="text-neutral-400 block text-[10px] uppercase">WEEKLY SESSIONS</span>
-              <span className="text-sm sm:text-base font-bold text-volt">{CLUB_STATS.weeklyRuns}</span>
+              <span className="text-sm sm:text-base font-bold text-white">{CLUB_STATS.weeklyRuns}</span>
             </div>
             <div className="border-l border-white/20 pl-6 sm:pl-10 hidden sm:block">
               <span className="text-neutral-400 block text-[10px] uppercase">DISTANCE LOGGED</span>

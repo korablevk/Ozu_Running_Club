@@ -151,7 +151,7 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
                       key={pg.name}
                       className={`flex items-center justify-between p-3 rounded-xl border text-sm cursor-pointer transition-all ${
                         formData.paceGroup === pg.name
-                          ? "border-asphalt-black bg-neutral-50 ring-1 ring-asphalt-black"
+                          ? "border-club-navy bg-club-navy/5 ring-1 ring-club-navy"
                           : "border-neutral-200 hover:border-neutral-300"
                       }`}
                     >
@@ -161,9 +161,9 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
                           name="paceGroup"
                           checked={formData.paceGroup === pg.name}
                           onChange={() => setFormData({ ...formData, paceGroup: pg.name })}
-                          className="w-4 h-4 text-asphalt-black"
+                          className="w-4 h-4 text-club-navy accent-club-navy"
                         />
-                        <span className="font-semibold text-asphalt-black">{pg.name}</span>
+                        <span className="font-semibold text-ink">{pg.name}</span>
                       </div>
                       <span className="text-xs font-mono text-neutral-500">{pg.pace}</span>
                     </label>
@@ -174,8 +174,8 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
               <div className="pt-3">
                 <Button
                   type="submit"
-                  variant="primary"
-                  className="w-full h-12 text-sm font-bold tracking-tight"
+                  variant="crimson"
+                  className="w-full h-12 text-sm font-bold tracking-tight shadow-md"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Securing Spot..." : "Confirm RSVP (Free)"}

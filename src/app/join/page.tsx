@@ -60,10 +60,10 @@ export default function JoinPage() {
         <div className="max-w-4xl mx-auto px-6 sm:px-8">
           {/* Top Header */}
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-            <Badge variant="volt" size="sm" className="mb-3">
+            <Badge variant="burgundy" size="sm" className="mb-3">
               Official Membership
             </Badge>
-            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-asphalt-black">
+            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-ink">
               Join The Club
             </h1>
             <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed">
@@ -79,7 +79,7 @@ export default function JoinPage() {
                     <div
                       className={`w-7 h-7 rounded-full text-xs font-mono font-bold flex items-center justify-center transition-colors ${
                         step === num
-                          ? "bg-asphalt-black text-white"
+                          ? "bg-club-deepNavy text-white"
                           : step > num
                           ? "bg-emerald-500 text-white"
                           : "bg-neutral-200 text-neutral-600"
@@ -254,12 +254,12 @@ export default function JoinPage() {
                           onClick={() => toggleStream(item.id)}
                           className={`p-3 rounded-xl border text-left text-xs font-semibold transition-all flex items-center justify-between ${
                             selected
-                              ? "bg-asphalt-black text-white border-asphalt-black"
+                              ? "bg-club-deepNavy text-white border-club-deepNavy"
                               : "bg-neutral-50 text-neutral-700 border-neutral-200 hover:border-neutral-300"
                           }`}
                         >
                           <span>{item.label}</span>
-                          {selected && <span className="w-2 h-2 rounded-full bg-volt" />}
+                          {selected && <span className="w-2 h-2 rounded-full bg-club-plum" />}
                         </button>
                       );
                     })}
@@ -330,10 +330,10 @@ export default function JoinPage() {
                   </Button>
                   <Button
                     type="submit"
-                    variant="volt"
+                    variant="crimson"
                     size="lg"
                     disabled={isSubmitting}
-                    className="font-extrabold text-sm sm:text-base tracking-tight"
+                    className="font-extrabold text-sm sm:text-base tracking-tight shadow-md"
                   >
                     {isSubmitting ? "Enrolling Member..." : "Submit Application & Join"}
                   </Button>
@@ -348,7 +348,7 @@ export default function JoinPage() {
                 </div>
 
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-telemetry text-volt bg-asphalt-black px-3 py-1 rounded-full font-bold">
+                  <span className="text-xs font-mono uppercase tracking-telemetry text-white bg-club-burgundy px-3 py-1 rounded-full font-bold">
                     Official Welcome
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-asphalt-black mt-3">
@@ -403,11 +403,11 @@ export default function JoinPage() {
                 </div>
 
                 {/* Partner Perk Code */}
-                <div className="max-w-xl mx-auto p-5 bg-asphalt-black text-white rounded-2xl border border-neutral-800 flex items-center justify-between text-left">
+                <div className="max-w-xl mx-auto p-5 bg-club-deepNavy text-white rounded-2xl border border-white/10 flex items-center justify-between text-left">
                   <div className="flex items-center gap-3">
-                    <Tag className="w-5 h-5 text-volt" />
+                    <Tag className="w-5 h-5 text-club-crimson" />
                     <div>
-                      <span className="text-xs font-mono uppercase text-volt font-bold block">
+                      <span className="text-xs font-mono uppercase text-club-burgundy font-bold block">
                         Runaway Zone Member Perk
                       </span>
                       <span className="text-sm font-bold">20% Off Footwear & Singlets</span>

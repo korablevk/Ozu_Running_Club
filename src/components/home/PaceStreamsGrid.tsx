@@ -86,7 +86,7 @@ export function PaceStreamsGrid() {
             <Link
               key={item.id}
               href={item.href}
-              className="group relative flex-shrink-0 w-[82vw] sm:w-[55vw] lg:w-auto h-[480px] sm:h-[520px] rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-sm flex flex-col justify-end p-6 text-white touch-snap-item transition-transform duration-300 hover:shadow-lg"
+              className="group relative flex-shrink-0 w-[82vw] sm:w-[55vw] lg:w-auto h-[480px] sm:h-[520px] rounded-2xl overflow-hidden bg-club-deepNavy border border-neutral-200/80 shadow-sm flex flex-col justify-end p-6 text-white touch-snap-item transition-transform duration-300 hover:shadow-lg hover:border-club-burgundy/40"
             >
               {/* Image */}
               <div className="absolute inset-0 z-0">
@@ -97,20 +97,20 @@ export function PaceStreamsGrid() {
                   className="object-cover transition-transform duration-700 ease-spring group-hover:scale-105"
                   sizes="(max-width: 1024px) 85vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy/95 via-black/40 to-transparent" />
               </div>
 
               {/* Card Meta & Content */}
               <div className="relative z-10 flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-telemetry text-volt font-bold">
-                  <span>{item.distance}</span>
-                  <span>•</span>
+                <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-telemetry text-white/90 font-bold bg-club-deepNavy/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-club-burgundy/30 self-start">
+                  <span className="text-club-burgundy font-bold">{item.distance}</span>
+                  <span className="text-white/40">•</span>
                   <span>{item.pace}</span>
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white flex items-center justify-between">
                   <span>{item.title}</span>
-                  <ArrowRight className="w-5 h-5 text-white/80 group-hover:text-volt group-hover:translate-x-1 transition-all" />
+                  <ArrowRight className="w-5 h-5 text-white/80 group-hover:text-club-crimson group-hover:translate-x-1.5 transition-all duration-200" />
                 </h3>
 
                 <p className="text-xs sm:text-sm text-neutral-300 line-clamp-2 leading-relaxed">
@@ -125,7 +125,7 @@ export function PaceStreamsGrid() {
         <div className="mt-6 block lg:hidden">
           <div className="w-32 h-[2px] bg-neutral-200 rounded-full overflow-hidden mx-auto">
             <div
-              className="h-full bg-asphalt-black transition-all duration-150 rounded-full"
+              className="h-full bg-club-deepNavy transition-all duration-150 rounded-full"
               style={{
                 width: "40%",
                 transform: `translateX(${scrollProgress * 150}%)`,

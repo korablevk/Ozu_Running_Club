@@ -144,7 +144,7 @@ export const RUNNING_EVENTS: RunningEvent[] = [
     targetPace: "Varied / Structured",
     maxParticipants: 35,
     registeredCount: 28,
-    coverImage: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1200&q=80",
+    coverImage: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80",
     routeMapImage: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
     description:
       "Structured track workouts open to all fitness levels. Workout structure: 1.5 km warmup jog + running drills + 8 x 400m at 5K effort with 90s jog recovery + 1.5 km cool-down. Pacers will keep steady lane pacing.",
@@ -321,7 +321,7 @@ export const DISCIPLINES: Discipline[] = [
     scheduleDay: "Every Tuesday 06:30 PM",
     location: "Campus Athletic Oval",
     distanceRange: "6.0 - 8.0 KM (Intervals)",
-    image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80",
     badge: "Form & Cadence",
   },
   {
@@ -395,9 +395,9 @@ export const RECENT_RECAPS: Recap[] = [
     totalRunners: 38,
     totalKm: 285,
     avgPace: "4:48 /km",
-    coverImage: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1000&q=80",
+    coverImage: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=80",
     gallery: [
-      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80",
     ],
     quote: {

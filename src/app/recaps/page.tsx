@@ -18,7 +18,7 @@ export default function RecapsPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Header */}
           <div className="py-8 sm:py-12 border-b border-neutral-200">
-            <Badge variant="volt" size="sm" className="mb-3">
+            <Badge variant="burgundy" size="sm" className="mb-3">
               Archives & Results
             </Badge>
             <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-asphalt-black">
@@ -40,7 +40,7 @@ export default function RecapsPage() {
                 <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                   TOTAL FINISHERS
                 </span>
-                <span className="text-2xl font-bold text-ozu-blue">1,240+</span>
+                <span className="text-2xl font-bold text-club-navy">1,240+</span>
               </div>
               <div className="border-t sm:border-t-0 sm:border-l border-neutral-200 pt-3 sm:pt-0 sm:pl-4">
                 <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
@@ -52,7 +52,7 @@ export default function RecapsPage() {
                 <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                   HALF/MARATHON PODIUMS
                 </span>
-                <span className="text-2xl font-bold text-volt bg-asphalt-black px-2 py-0.5 rounded inline-block">
+                <span className="text-2xl font-bold text-white bg-club-burgundy px-2.5 py-0.5 rounded inline-block">
                   12
                 </span>
               </div>
@@ -69,7 +69,7 @@ export default function RecapsPage() {
                 {/* Header Row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-neutral-100 gap-3">
                   <div>
-                    <span className="text-xs font-mono uppercase tracking-telemetry text-volt bg-asphalt-black px-2.5 py-1 rounded font-bold">
+                    <span className="text-xs font-mono uppercase tracking-telemetry text-white bg-club-burgundy px-2.5 py-1 rounded font-bold">
                       {recap.eventName}
                     </span>
                     <h2 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-asphalt-black mt-2">
@@ -97,7 +97,7 @@ export default function RecapsPage() {
                   <div>
                     <span className="text-[10px] uppercase text-neutral-500 block">TOTAL RUNNERS</span>
                     <span className="text-lg sm:text-xl font-bold text-asphalt-black flex items-center justify-center gap-1 mt-0.5">
-                      <Users className="w-4 h-4 text-ozu-blue" />
+                      <Users className="w-4 h-4 text-club-navy" />
                       {recap.totalRunners}
                     </span>
                   </div>
@@ -134,7 +134,7 @@ export default function RecapsPage() {
                 </div>
 
                 {/* Quote block */}
-                <blockquote className="bg-neutral-50 p-6 rounded-2xl border-l-4 border-asphalt-black text-neutral-700 italic text-sm leading-relaxed mt-4">
+                <blockquote className="bg-neutral-50 p-6 rounded-2xl border-l-4 border-club-burgundy text-neutral-700 italic text-sm leading-relaxed mt-4">
                   &ldquo;{recap.quote.text}&rdquo;
                   <div className="mt-2 text-xs font-mono uppercase tracking-wider not-italic text-neutral-500 font-bold">
                     — {recap.quote.author}, {recap.quote.role}

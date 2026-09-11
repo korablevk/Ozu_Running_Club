@@ -11,16 +11,27 @@
   --gutter-mobile: clamp(1rem, 4.26vw, 1.5rem);
   --gutter-desktop: max(2rem, 3.33vw);
   
-  /* Primary Palettes */
-  --color-canvas-light: #ffffff;
-  --color-canvas-subtle: #f7f7f7;
-  --color-canvas-card: #f3f4f6;
-  --color-canvas-dark: #111620;
+  /* Primary ÖzÜ Running Club Semantic Palette (v0.2) */
+  --color-club-deepNavy: #1E294C;
+  --color-club-navy: #263260;
+  --color-club-plum: #56244F;
+  --color-club-burgundy: #871537;
+  --color-club-crimson: #B50E2C;
+  --color-off-white: #F7F7F5;
+  --color-white: #FFFFFF;
+  --color-ink: #111318;
   
-  --color-ozu-navy: #081935;
-  --color-ozu-blue: #0b5ed7;
-  --color-kinetic-volt: #d4ff00;
-  --color-asphalt-black: #000000;
+  /* Canvas mappings */
+  --color-canvas-light: #FFFFFF;
+  --color-canvas-subtle: #F7F7F5;
+  --color-canvas-card: #FFFFFF;
+  --color-canvas-dark: #1E294C;
+  
+  /* Signature Brand Gradient */
+  --brand-gradient: linear-gradient(115deg, #263260 0%, #56244F 48%, #B50E2C 100%);
+  
+  /* Backward-compatible fallbacks for neutral scaffolding */
+  --color-asphalt-black: #111318;
   --color-dim-gray: #666666;
   --color-divider: #e5e5e5;
 }
@@ -100,6 +111,11 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #0b5ed7;
+  outline: 2px solid #871537;
   outline-offset: 2px;
+}
+
+::selection {
+  background-color: #871537;
+  color: #FFFFFF;
 }

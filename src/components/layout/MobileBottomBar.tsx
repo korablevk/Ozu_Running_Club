@@ -20,8 +20,8 @@ export function MobileBottomBar() {
         <Link
           href="/events"
           className={cn(
-            "flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-600 hover:text-asphalt-black transition-colors",
-            pathname.startsWith("/events") && "text-asphalt-black font-bold"
+            "flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-600 hover:text-club-navy transition-colors",
+            pathname.startsWith("/events") && "text-club-navy font-bold"
           )}
         >
           <Calendar className="w-5 h-5" />
@@ -30,11 +30,11 @@ export function MobileBottomBar() {
 
         <Link
           href="/#upcoming-runs"
-          className="flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-600 hover:text-asphalt-black transition-colors relative"
+          className="flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-600 hover:text-club-navy transition-colors relative"
         >
           <span className="relative flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-ozu-blue" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-volt" />
+            <Sparkles className="w-5 h-5 text-club-navy" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-club-crimson" />
           </span>
           <span className="text-[10px] font-mono uppercase tracking-wider">Next Run</span>
         </Link>
@@ -42,8 +42,8 @@ export function MobileBottomBar() {
         <Link
           href="/join"
           className={cn(
-            "flex items-center gap-1.5 bg-volt text-asphalt-black px-3.5 py-1.5 rounded-pill font-bold text-xs font-sans tracking-tight hover:bg-volt-hover active:scale-95 transition-all shadow-sm",
-            pathname === "/join" && "ring-2 ring-asphalt-black"
+            "flex items-center gap-1.5 bg-club-crimson text-white px-3.5 py-1.5 rounded-pill font-bold text-xs font-sans tracking-tight hover:bg-club-burgundy active:scale-95 transition-all shadow-sm",
+            pathname === "/join" && "ring-2 ring-club-burgundy"
           )}
         >
           <UserPlus className="w-3.5 h-3.5" />
@@ -54,7 +54,7 @@ export function MobileBottomBar() {
           type="button"
           onClick={() => setIsDrawerOpen(true)}
           aria-label="Open full menu"
-          className="flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-700 hover:text-asphalt-black transition-colors"
+          className="flex flex-col items-center justify-center gap-1 py-1 px-3 text-neutral-700 hover:text-club-navy transition-colors"
         >
           <Menu className="w-5 h-5" />
           <span className="text-[10px] font-mono uppercase tracking-wider">Menu</span>

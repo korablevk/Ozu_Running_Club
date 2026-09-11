@@ -156,7 +156,7 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
           <div className="pt-2">
             <Button
               type="submit"
-              variant="volt"
+              variant="crimson"
               className="w-full h-12 text-sm font-bold tracking-tight shadow-md"
               disabled={isSubmitting}
             >

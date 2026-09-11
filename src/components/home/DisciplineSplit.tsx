@@ -40,14 +40,14 @@ export function DisciplineSplit() {
                     onClick={() => setActiveIndex(idx)}
                     className={`group text-left py-4 px-4 sm:px-6 rounded-2xl transition-all duration-200 flex items-center justify-between cursor-pointer ${
                       isActive
-                        ? "bg-white shadow-md border border-neutral-200/80"
+                        ? "bg-white shadow-md border-l-4 border-l-club-navy border-y border-r border-neutral-200/80"
                         : "hover:bg-neutral-200/50"
                     }`}
                   >
                     <div className="flex items-center gap-4">
                       <span
                         className={`font-mono text-xs tracking-telemetry font-bold transition-colors ${
-                          isActive ? "text-ozu-blue" : "text-neutral-400 group-hover:text-neutral-600"
+                          isActive ? "text-club-navy" : "text-neutral-400 group-hover:text-neutral-600"
                         }`}
                       >
                         {disc.number}
@@ -55,7 +55,7 @@ export function DisciplineSplit() {
                       <div>
                         <h3
                           className={`text-xl sm:text-2xl font-bold font-sans tracking-tight transition-colors ${
-                            isActive ? "text-asphalt-black" : "text-neutral-700 group-hover:text-asphalt-black"
+                            isActive ? "text-club-deepNavy" : "text-neutral-700 group-hover:text-ink"
                           }`}
                         >
                           {disc.title}
@@ -68,12 +68,12 @@ export function DisciplineSplit() {
 
                     <div className="flex items-center gap-2">
                       {isActive && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-volt hidden sm:inline-block" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-club-plum hidden sm:inline-block" />
                       )}
                       <ArrowRight
                         className={`w-4 h-4 transition-transform ${
                           isActive
-                            ? "text-asphalt-black translate-x-1"
+                            ? "text-club-navy translate-x-1"
                             : "text-neutral-400 opacity-0 group-hover:opacity-100"
                         }`}
                       />
@@ -86,7 +86,7 @@ export function DisciplineSplit() {
 
           {/* Right Column: Dynamic Media & Telemetry Showcase */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 shadow-xl h-[480px] sm:h-[540px] flex flex-col justify-between p-6 sm:p-8 text-white">
+            <div className="relative rounded-2xl overflow-hidden bg-club-deepNavy border border-neutral-800 shadow-xl h-[480px] sm:h-[540px] flex flex-col justify-between p-6 sm:p-8 text-white">
               {/* Dynamic Image with Smooth Fade */}
               <div className="absolute inset-0 z-0">
                 <Image
@@ -97,15 +97,15 @@ export function DisciplineSplit() {
                   className="object-cover transition-all duration-700 ease-spring"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-club-deepNavy/95 via-black/40 to-black/30" />
               </div>
 
               {/* Card Top Tag */}
               <div className="relative z-10 flex items-center justify-between">
-                <Badge variant="volt" size="sm">
+                <Badge variant="burgundy" size="sm">
                   {activeDiscipline.badge}
                 </Badge>
-                <span className="text-xs font-mono uppercase tracking-telemetry text-white/80 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                <span className="text-xs font-mono uppercase tracking-telemetry text-white/90 bg-club-deepNavy/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
                   {activeDiscipline.distanceRange}
                 </span>
               </div>
@@ -122,13 +122,13 @@ export function DisciplineSplit() {
                 </div>
 
                 {/* Telemetry Chips */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono bg-black/60 backdrop-blur-md p-3.5 rounded-xl border border-white/10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono bg-club-deepNavy/80 backdrop-blur-md p-3.5 rounded-xl border border-white/10">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-3.5 h-3.5 text-volt shrink-0" />
+                    <Calendar className="w-3.5 h-3.5 text-club-plum shrink-0" />
                     <span className="truncate">{activeDiscipline.scheduleDay}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-volt shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-club-plum shrink-0" />
                     <span className="truncate">{activeDiscipline.location}</span>
                   </div>
                 </div>
@@ -136,9 +136,9 @@ export function DisciplineSplit() {
                 <div className="pt-1">
                   <Button
                     href="/events"
-                    variant="volt"
+                    variant="crimson"
                     size="sm"
-                    className="w-full sm:w-auto font-bold tracking-tight text-xs"
+                    className="w-full sm:w-auto font-bold tracking-tight text-xs shadow-md"
                   >
                     View All {activeDiscipline.title} Sessions
                   </Button>

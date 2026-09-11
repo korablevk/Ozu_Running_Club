@@ -74,10 +74,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Header Banner */}
           <div className="py-8 sm:py-14 border-b border-neutral-200">
-            <Badge variant="volt" size="sm" className="mb-3">
+            <Badge variant="burgundy" size="sm" className="mb-3">
               Our Manifesto
             </Badge>
-            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-asphalt-black">
+            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-ink">
               Built on Discipline, <br />
               Connected by Stride.
             </h1>
@@ -89,16 +89,16 @@ export default function AboutPage() {
 
           {/* 3 Pillars Section */}
           <div className="py-12 sm:py-16">
-            <h2 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-asphalt-black mb-8">
+            <h2 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-ink mb-8">
               The Three Pillars of ÖzÜ RC
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
               <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-volt flex items-center justify-center text-asphalt-black font-bold mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-club-deepNavy flex items-center justify-center text-white font-bold mb-6">
                     <Compass className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold font-sans text-asphalt-black mb-2">
+                  <h3 className="text-xl font-bold font-sans text-ink mb-2">
                     1. Inclusive Cadence
                   </h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">
@@ -113,10 +113,10 @@ export default function AboutPage() {
 
               <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-ozu-blue flex items-center justify-center text-white font-bold mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-club-plum flex items-center justify-center text-white font-bold mb-6">
                     <Shield className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold font-sans text-asphalt-black mb-2">
+                  <h3 className="text-xl font-bold font-sans text-ink mb-2">
                     2. Campus & City Grit
                   </h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">
@@ -131,10 +131,10 @@ export default function AboutPage() {
 
               <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm flex flex-col justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-asphalt-black flex items-center justify-center text-white font-bold mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-club-burgundy flex items-center justify-center text-white font-bold mb-6">
                     <Users className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold font-sans text-asphalt-black mb-2">
+                  <h3 className="text-xl font-bold font-sans text-ink mb-2">
                     3. Lifelong Pack
                   </h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">
@@ -179,7 +179,7 @@ export default function AboutPage() {
                     <h3 className="text-lg font-bold font-sans text-asphalt-black">
                       {leader.name}
                     </h3>
-                    <p className="text-xs text-ozu-blue font-semibold mt-0.5">
+                    <p className="text-xs text-club-burgundy font-semibold mt-0.5">
                       {leader.role}
                     </p>
                     <p className="text-xs text-neutral-500 mt-1">
@@ -196,7 +196,7 @@ export default function AboutPage() {
 
           {/* FAQ Accordion Section */}
           <div className="py-12 border-t border-neutral-200 max-w-3xl">
-            <h2 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-asphalt-black mb-8">
+            <h2 className="text-2xl sm:text-4xl font-bold font-sans tracking-tight text-ink mb-8">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
@@ -205,7 +205,7 @@ export default function AboutPage() {
                   key={i}
                   className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm"
                 >
-                  <h3 className="text-base font-bold text-asphalt-black mb-2">
+                  <h3 className="text-base font-bold text-ink mb-2">
                     {faq.q}
                   </h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">
@@ -215,14 +215,14 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="mt-10 p-6 bg-asphalt-black text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-10 p-6 bg-club-deepNavy text-white rounded-2xl border border-club-navy/60 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h4 className="text-lg font-bold">Have another question?</h4>
                 <p className="text-xs text-neutral-300 mt-1">
                   Reach out to the board on Instagram @ozurunning or join our WhatsApp.
                 </p>
               </div>
-              <Button href="/join" variant="volt" size="sm" className="shrink-0 font-bold">
+              <Button href="/join" variant="crimson" size="sm" className="shrink-0 font-bold shadow-md">
                 Join the Club
               </Button>
             </div>

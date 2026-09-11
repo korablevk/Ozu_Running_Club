@@ -54,7 +54,7 @@ export default async function EventDetailPage({
           <div className="relative z-10 max-w-7xl mx-auto w-full px-6 sm:px-8 pt-8">
             <Link
               href="/events"
-              className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-telemetry text-neutral-300 hover:text-volt transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-telemetry text-neutral-300 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Schedule</span>
@@ -64,7 +64,7 @@ export default async function EventDetailPage({
           {/* Hero Titles */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-6 sm:px-8 pb-10">
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <Badge variant="volt" size="sm">
+              <Badge variant="burgundy" size="sm">
                 {event.typeLabel}
               </Badge>
               <span className="text-xs font-mono uppercase tracking-telemetry text-white/80 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
@@ -89,7 +89,7 @@ export default async function EventDetailPage({
               <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                 DISTANCE
               </span>
-              <span className="text-xl sm:text-2xl font-bold text-asphalt-black">
+              <span className="text-xl sm:text-2xl font-bold text-ink">
                 {event.distanceKm} KM
               </span>
             </div>
@@ -97,7 +97,7 @@ export default async function EventDetailPage({
               <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                 TARGET PACE
               </span>
-              <span className="text-xl sm:text-2xl font-bold text-ozu-blue">
+              <span className="text-xl sm:text-2xl font-bold text-club-navy">
                 {event.targetPace}
               </span>
             </div>
@@ -105,33 +105,33 @@ export default async function EventDetailPage({
               <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                 ELEVATION
               </span>
-              <span className="text-xl sm:text-2xl font-bold text-asphalt-black">
+              <span className="text-xl sm:text-2xl font-bold text-ink">
                 +{event.elevationGainM} M
               </span>
             </div>
-            <div className="border-t sm:border-t-0 sm:border-l border-neutral-200 pt-3 sm:pt-0 sm:pl-4">
+            <div className="border-l border-neutral-200 pl-4">
               <span className="text-[10px] uppercase tracking-telemetry text-neutral-500 block mb-1">
                 DURATION
               </span>
-              <span className="text-xl sm:text-2xl font-bold text-asphalt-black">
+              <span className="text-xl sm:text-2xl font-bold text-ink">
                 ~{event.estimatedDurationMin} MIN
               </span>
             </div>
           </div>
 
-          {/* Main 2-Column Split */}
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left Col: Details, Schedule, Pace Groups, Route (lg:span 7) */}
+          {/* 2-Column Split: Details & RSVP Sidebar */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-10">
+            {/* Left Col: Event Details (lg:span 7) */}
             <div className="lg:col-span-7 space-y-10">
-              {/* Meeting Point Box */}
-              <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
-                <h3 className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-bold mb-3">
-                  Meeting Point & Time
+              {/* Meeting Point Card */}
+              <div className="border border-neutral-200 rounded-2xl bg-white p-6 shadow-sm">
+                <h3 className="text-xs font-mono uppercase tracking-telemetry text-neutral-500 font-semibold mb-3">
+                  Meeting Point & Check-in
                 </h3>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <div className="text-lg font-bold text-asphalt-black flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-ozu-blue shrink-0" />
+                    <div className="text-lg font-bold text-ink flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-club-navy shrink-0" />
                       <span>{event.meetingPoint}</span>
                     </div>
                     <div className="text-xs text-neutral-600 mt-1 font-mono">
@@ -143,7 +143,7 @@ export default async function EventDetailPage({
                     href={event.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-neutral-100 text-xs font-bold font-sans text-asphalt-black hover:bg-neutral-200 transition-colors shrink-0"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-neutral-100 text-xs font-bold font-sans text-ink hover:bg-neutral-200 transition-colors shrink-0"
                   >
                     <span>Open in Maps</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export default async function EventDetailPage({
 
               {/* Description & Overview */}
               <div>
-                <h3 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black mb-3">
+                <h3 className="text-2xl font-bold font-sans tracking-tight text-ink mb-3">
                   Run Overview
                 </h3>
                 <p className="text-base text-neutral-700 leading-relaxed">
@@ -163,13 +163,13 @@ export default async function EventDetailPage({
 
               {/* Workout Timeline */}
               <div>
-                <h3 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black mb-4">
+                <h3 className="text-2xl font-bold font-sans tracking-tight text-ink mb-4">
                   Session Schedule
                 </h3>
                 <div className="border border-neutral-200 rounded-2xl bg-white p-6 space-y-4">
                   {event.schedule.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-4">
-                      <span className="font-mono text-xs font-bold text-ozu-blue bg-neutral-100 px-2.5 py-1 rounded shrink-0">
+                      <span className="font-mono text-xs font-bold text-club-navy bg-club-navy/5 px-2.5 py-1 rounded shrink-0">
                         {item.time}
                       </span>
                       <span className="text-sm font-semibold text-neutral-800 pt-0.5">
@@ -182,7 +182,7 @@ export default async function EventDetailPage({
 
               {/* Pace Groups */}
               <div>
-                <h3 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black mb-4">
+                <h3 className="text-2xl font-bold font-sans tracking-tight text-ink mb-4">
                   Assigned Pace Packs
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -192,8 +192,8 @@ export default async function EventDetailPage({
                       className="bg-white p-5 rounded-xl border border-neutral-200 shadow-sm"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-asphalt-black">{pg.name}</span>
-                        <span className="text-xs font-mono font-bold text-volt bg-asphalt-black px-2 py-0.5 rounded">
+                        <span className="text-sm font-bold text-ink">{pg.name}</span>
+                        <span className="text-xs font-mono font-bold text-white bg-club-deepNavy px-2 py-0.5 rounded">
                           {pg.pace}
                         </span>
                       </div>
@@ -209,10 +209,10 @@ export default async function EventDetailPage({
               </div>
 
               {/* Partner Perk Box */}
-              <div className="bg-asphalt-black text-white p-6 rounded-2xl border border-neutral-800 flex items-start gap-4">
-                <Navigation className="w-6 h-6 text-volt shrink-0 mt-1" />
+              <div className="bg-club-deepNavy text-white p-6 rounded-2xl border border-club-navy/60 flex items-start gap-4">
+                <Navigation className="w-6 h-6 text-club-burgundy shrink-0 mt-1" />
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-telemetry text-volt font-bold block mb-1">
+                  <span className="text-[10px] font-mono uppercase tracking-telemetry text-club-burgundy font-bold block mb-1">
                     Gear Recommendation by Runaway Zone
                   </span>
                   <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
@@ -223,7 +223,7 @@ export default async function EventDetailPage({
                     href="https://runawayzone.com/tr/etkinlikler"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-volt mt-3 hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-white mt-3 hover:text-club-burgundy underline underline-offset-4"
                   >
                     <span>Explore Partner Gear</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />

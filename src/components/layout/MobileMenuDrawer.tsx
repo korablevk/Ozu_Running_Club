@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ClubLogo } from "@/components/ui/ClubLogo";
 import { X, ArrowUpRight, MessageCircle, Navigation } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
@@ -42,21 +43,14 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
     <div className="fixed inset-0 z-50 bg-white flex flex-col justify-between p-6 sm:p-8 animate-in fade-in duration-200 lg:hidden overflow-y-auto">
       {/* Top Header inside Drawer */}
       <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
-        <Link
-          href="/"
-          onClick={onClose}
-          className="flex items-center gap-1.5 focus:outline-none"
-        >
-          <span className="font-extrabold text-2xl tracking-tighter font-display text-asphalt-black">
-            ÖZÜ
-          </span>
-          <span className="text-volt font-black text-2xl">RC</span>
-        </Link>
+        <div onClick={onClose}>
+          <ClubLogo size="default" variant="dark" />
+        </div>
 
         <button
           onClick={onClose}
           aria-label="Close menu"
-          className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-asphalt-black hover:bg-neutral-200 transition-colors"
+          className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-ink hover:bg-neutral-200 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -74,20 +68,20 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               className={cn(
                 "group flex items-center justify-between text-2xl sm:text-3xl font-bold font-sans tracking-tight transition-all duration-150 py-1.5",
                 item.highlight
-                  ? "text-asphalt-black"
+                  ? "text-club-crimson"
                   : isActive
-                  ? "text-ozu-blue"
-                  : "text-neutral-900 hover:text-ozu-blue"
+                  ? "text-club-navy"
+                  : "text-ink hover:text-club-navy"
               )}
             >
               <span className="flex items-center gap-3">
                 {item.highlight && (
-                  <span className="w-2.5 h-2.5 rounded-full bg-volt inline-block" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-club-crimson inline-block" />
                 )}
                 {item.label}
               </span>
               {item.badge && (
-                <span className="text-[10px] font-mono tracking-telemetry uppercase bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono tracking-telemetry uppercase bg-club-burgundy/10 text-club-burgundy px-2 py-0.5 rounded font-bold">
                   {item.badge}
                 </span>
               )}

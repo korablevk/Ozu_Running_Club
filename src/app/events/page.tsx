@@ -42,10 +42,10 @@ export default function EventsPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Header Banner */}
           <div className="py-8 sm:py-12 border-b border-neutral-200">
-            <Badge variant="volt" size="sm" className="mb-3">
+            <Badge variant="burgundy" size="sm" className="mb-3">
               Official Schedule
             </Badge>
-            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-asphalt-black">
+            <h1 className="text-4xl sm:text-6xl font-extrabold font-sans tracking-tight text-ink">
               Runs & Sessions
             </h1>
             <p className="mt-3 text-base sm:text-lg text-neutral-600 max-w-2xl leading-relaxed">
@@ -63,7 +63,7 @@ export default function EventsPage() {
                     onClick={() => setSelectedType(cat.id)}
                     className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold font-sans tracking-tight transition-all cursor-pointer ${
                       selectedType === cat.id
-                        ? "bg-asphalt-black text-white shadow-sm"
+                        ? "bg-club-deepNavy text-white shadow-sm"
                         : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                     }`}
                   >

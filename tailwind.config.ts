@@ -9,30 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        club: {
+          deepNavy: "#1E294C",
+          navy: "#263260",
+          plum: "#56244F",
+          burgundy: "#871537",
+          crimson: "#B50E2C",
+        },
+        offWhite: "#F7F7F5",
+        ink: "#111318",
         canvas: {
           light: "#FFFFFF",
-          subtle: "#F7F7F7",
-          card: "#FAFAFA",
-          dark: "#111620",
+          subtle: "#F7F7F5",
+          card: "#FFFFFF",
+          dark: "#1E294C",
         },
-        ozu: {
-          navy: "#081935",
-          blue: "#0B5ED7",
-          light: "#EBF3FE",
-          accent: "#1A73E8",
-        },
-        volt: {
-          DEFAULT: "#D4FF00",
-          hover: "#C3EB00",
-          muted: "#ECFF80",
-        },
+        // Retained for neutral base fallbacks
         asphalt: {
-          black: "#000000",
-          charcoal: "#151522",
+          black: "#111318",
+          charcoal: "#1E294C",
           dim: "#666666",
           border: "#E5E5E5",
           lightBorder: "#EEEEEE",
         },
+      },
+      backgroundImage: {
+        "club-gradient": "linear-gradient(115deg, #263260 0%, #56244F 48%, #B50E2C 100%)",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],

@@ -57,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sansFont.variable} ${monoFont.variable}`}>
-      <body className="min-h-screen bg-canvas-light text-asphalt-black antialiased selection:bg-volt selection:text-asphalt-black pb-16 lg:pb-0">
+      <body className="min-h-screen bg-canvas-light text-ink antialiased selection:bg-club-burgundy selection:text-white pb-16 lg:pb-0">
         {children}
       </body>
     </html>
