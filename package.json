@@ -2,6 +2,7 @@
   "name": "ozu-running-club",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,12 +11,18 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "^3.89.0",
+    "@payloadcms/next": "^3.89.0",
+    "@payloadcms/richtext-lexical": "^3.89.0",
     "clsx": "^2.1.1",
+    "graphql": "^16.14.2",
     "lucide-react": "^1.16.0",
     "motion": "^12.4.7",
-    "next": "^15.1.7",
+    "next": "^15.4.11",
+    "payload": "^3.89.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.35.4",
     "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
