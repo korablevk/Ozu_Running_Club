@@ -6,6 +6,23 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "email", "role", "createdAt"],
+    group: "Administration",
+    hidden: ({ user }) => user?.role !== "admin",
+  },
+  access: {
+    read: ({ req: { user } }) => {
+      if (!user) return false;
+      if (user.role === "admin") return true;
+      return {
+        id: {
+          equals: user.id,
+        },
+      };
+    },
+    create: ({ req: { user } }) => user?.role === "admin",
+    update: ({ req: { user } }) => user?.role === "admin",
+    delete: ({ req: { user } }) => user?.role === "admin",
+    admin: ({ req: { user } }) => Boolean(user),
   },
   fields: [
     {
@@ -29,7 +46,6 @@ export const Users: CollectionConfig = {
         },
       ],
       access: {
-        // Only admins can change user roles
         update: ({ req: { user } }) => user?.role === "admin",
       },
     },

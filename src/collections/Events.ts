@@ -4,8 +4,10 @@ export const Events: CollectionConfig = {
   slug: "events",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "eventType", "date", "status", "isPublished", "isFeatured"],
+    defaultColumns: ["title", "date", "eventType", "status", "isPublished", "maxParticipants", "isFeatured"],
+    group: "Activities & Events",
   },
+  defaultSort: "date",
   access: {
     read: ({ req: { user } }) => {
       if (user) return true;
@@ -15,6 +17,9 @@ export const Events: CollectionConfig = {
         },
       };
     },
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   fields: [
     {

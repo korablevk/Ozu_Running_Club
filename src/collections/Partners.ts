@@ -5,7 +5,9 @@ export const Partners: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "tier", "websiteUrl", "isPublished", "sortOrder"],
+    group: "Community",
   },
+  defaultSort: "sortOrder",
   access: {
     read: ({ req: { user } }) => {
       if (user) return true;
@@ -15,6 +17,9 @@ export const Partners: CollectionConfig = {
         },
       };
     },
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   fields: [
     {

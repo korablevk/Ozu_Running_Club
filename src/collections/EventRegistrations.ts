@@ -6,13 +6,14 @@ export const EventRegistrations: CollectionConfig = {
   admin: {
     useAsTitle: "fullName",
     defaultColumns: ["fullName", "email", "event", "paceGroup", "status", "createdAt"],
+    group: "Activities & Events",
   },
   defaultSort: "-createdAt",
   access: {
     read: ({ req: { user } }) => Boolean(user),
     create: ({ req: { user } }) => Boolean(user),
     update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   hooks: {
     beforeValidate: [

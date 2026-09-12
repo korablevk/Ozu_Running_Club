@@ -27,8 +27,15 @@ export const Media: CollectionConfig = {
       },
     ],
   },
+  admin: {
+    group: "Media & Assets",
+    defaultColumns: ["filename", "alt", "mimeType", "filesize", "createdAt"],
+  },
   access: {
     read: () => true,
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   fields: [
     {

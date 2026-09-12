@@ -5,14 +5,15 @@ export const ClubMembers: CollectionConfig = {
   slug: "club-members",
   admin: {
     useAsTitle: "fullName",
-    defaultColumns: ["fullName", "email", "studentId", "status", "createdAt"],
+    defaultColumns: ["fullName", "email", "studentId", "faculty", "experienceLevel", "status", "createdAt"],
+    group: "Community",
   },
   defaultSort: "-createdAt",
   access: {
     read: ({ req: { user } }) => Boolean(user),
     create: ({ req: { user } }) => Boolean(user),
     update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   hooks: {
     beforeValidate: [
