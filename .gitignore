@@ -33,3 +33,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /reference
+/public/media/*
+!/public/media/300x300*
