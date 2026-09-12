@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import { RunningEvent } from "@/lib/data";
 import { Button } from "@/components/ui/Button";
-import { CheckCircle, Calendar, Download, ArrowRight, ShieldCheck } from "lucide-react";
+import { CheckCircle, Calendar, Download, ArrowRight, ShieldCheck, AlertCircle, Clock } from "lucide-react";
 import { generateGoogleCalendarUrl, generateIcsData } from "@/lib/utils";
 
 export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
   const [step, setStep] = useState<"form" | "confirmed">("form");
+  const [rsvpStatus, setRsvpStatus] = useState<"confirmed" | "waitlist">("confirmed");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -17,13 +19,35 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch(`/api/events/${event.slug}/rsvp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setErrorMessage(result.error || "Failed to submit RSVP. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      setRsvpStatus(result.status || "confirmed");
       setIsSubmitting(false);
       setStep("confirmed");
-    }, 600);
+    } catch (err) {
+      setErrorMessage("Network error occurred. Please check your internet connection and try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const downloadIcs = () => {
@@ -153,6 +177,16 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
             </div>
           </div>
 
+          {errorMessage && (
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2.5">
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <span className="font-bold block mb-0.5">Registration Notice</span>
+                <span>{errorMessage}</span>
+              </div>
+            </div>
+          )}
+
           <div className="pt-2">
             <Button
               type="submit"
@@ -171,18 +205,37 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
         </form>
       ) : (
         <div className="text-center py-4 space-y-5">
-          <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-            <CheckCircle className="w-7 h-7" />
-          </div>
+          {rsvpStatus === "confirmed" ? (
+            <>
+              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                <CheckCircle className="w-7 h-7" />
+              </div>
 
-          <div>
-            <h4 className="text-xl font-bold font-sans tracking-tight text-asphalt-black">
-              RSVP Confirmed!
-            </h4>
-            <p className="text-xs text-neutral-600 mt-1 max-w-xs mx-auto">
-              Your name is added to the pack. See you at {event.meetingPoint} on {event.displayDate}.
-            </p>
-          </div>
+              <div>
+                <h4 className="text-xl font-bold font-sans tracking-tight text-asphalt-black">
+                  RSVP Confirmed!
+                </h4>
+                <p className="text-xs text-neutral-600 mt-1 max-w-xs mx-auto">
+                  Your spot is secured. See you at {event.meetingPoint} on {event.displayDate}.
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                <Clock className="w-7 h-7" />
+              </div>
+
+              <div>
+                <h4 className="text-xl font-bold font-sans tracking-tight text-asphalt-black">
+                  Added to Waitlist!
+                </h4>
+                <p className="text-xs text-neutral-600 mt-1 max-w-xs mx-auto">
+                  This session is currently at full capacity. You are registered on the priority waitlist and will be notified if a slot opens up.
+                </p>
+              </div>
+            </>
+          )}
 
           {/* Calendar Sync Buttons */}
           <div className="grid grid-cols-1 gap-2 pt-1">

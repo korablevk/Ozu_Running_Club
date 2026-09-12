@@ -7,6 +7,13 @@ export const EventRegistrations: CollectionConfig = {
     useAsTitle: "fullName",
     defaultColumns: ["fullName", "email", "event", "paceGroup", "status", "createdAt"],
   },
+  defaultSort: "-createdAt",
+  access: {
+    read: ({ req: { user } }) => Boolean(user),
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => Boolean(user),
+  },
   hooks: {
     beforeValidate: [
       async ({ data, req, operation, originalDoc }) => {
@@ -16,7 +23,13 @@ export const EventRegistrations: CollectionConfig = {
           data.email = data.email.trim().toLowerCase();
         }
         if (data.studentId && typeof data.studentId === "string") {
-          data.studentId = data.studentId.trim();
+          data.studentId = data.studentId.trim().toUpperCase();
+        }
+        if (data.fullName && typeof data.fullName === "string") {
+          data.fullName = data.fullName.trim();
+        }
+        if (data.phone && typeof data.phone === "string") {
+          data.phone = data.phone.trim();
         }
 
         // Duplicate invariant: one active registration per event + normalized email
@@ -41,6 +54,7 @@ export const EventRegistrations: CollectionConfig = {
             },
             limit: 1,
             depth: 0,
+            overrideAccess: true,
           });
 
           if (existing.totalDocs > 0) {
