@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { RUNNING_EVENTS } from "@/lib/data";
+import { getPublishedEvents, getEventBySlug } from "@/lib/dal";
 import { DesktopHeader } from "@/components/layout/DesktopHeader";
 import { MobileTopBar } from "@/components/layout/MobileTopBar";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
@@ -12,8 +12,11 @@ import { Button } from "@/components/ui/Button";
 import { MapPin, Calendar, Clock, ArrowLeft, ArrowUpRight, Check, Users, Navigation } from "lucide-react";
 import { EventDetailsRSVP } from "./EventDetailsRSVP";
 
-export function generateStaticParams() {
-  return RUNNING_EVENTS.map((event) => ({
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const events = await getPublishedEvents();
+  return events.map((event) => ({
     slug: event.slug,
   }));
 }
@@ -24,13 +27,13 @@ export default async function EventDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = await params;
-  const event = RUNNING_EVENTS.find((e) => e.slug === resolvedParams.slug);
+  const event = await getEventBySlug(resolvedParams.slug);
 
   if (!event) {
     notFound();
   }
 
-  const spotsLeft = event.maxParticipants - event.registeredCount;
+  const spotsLeft = Math.max(0, event.maxParticipants - event.registeredCount);
 
   return (
     <div className="flex flex-col min-h-screen bg-canvas-subtle">

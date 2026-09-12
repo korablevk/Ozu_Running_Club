@@ -2,11 +2,11 @@
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
-import { RUNNING_EVENTS } from "@/lib/data";
+import type { RunningEvent } from "@/lib/data";
 import { EventCard } from "@/components/events/EventCard";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-export function UpcomingRunsCarousel() {
+export function UpcomingRunsCarousel({ events = [] }: { events?: RunningEvent[] }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -45,7 +45,7 @@ export function UpcomingRunsCarousel() {
               href="/events"
               className="text-xs uppercase font-bold tracking-wider text-neutral-700 hover:text-club-navy transition-colors flex items-center gap-1 font-sans underline underline-offset-4"
             >
-              <span>View All ({RUNNING_EVENTS.length})</span>
+              <span>View All ({events.length})</span>
             </Link>
 
             {/* Desktop Left/Right Controls */}
@@ -76,7 +76,7 @@ export function UpcomingRunsCarousel() {
           onScroll={handleScroll}
           className="flex gap-6 overflow-x-auto no-scrollbar touch-scroll -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0 py-2"
         >
-          {RUNNING_EVENTS.map((event) => (
+          {events.map((event) => (
             <div
               key={event.id}
               className="flex-shrink-0 w-[84vw] sm:w-[360px] touch-snap-item"

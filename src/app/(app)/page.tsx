@@ -12,8 +12,14 @@ import { RunnerStories } from "@/components/home/RunnerStories";
 import { RecapsGrid } from "@/components/home/RecapsGrid";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { JoinCtaBanner } from "@/components/home/JoinCtaBanner";
+import { getPublishedEvents, getPublishedPartners } from "@/lib/dal";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [events, partners] = await Promise.all([
+    getPublishedEvents(),
+    getPublishedPartners(),
+  ]);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation Bars */}
@@ -26,10 +32,10 @@ export default function HomePage() {
         <Ticker />
         <PaceStreamsGrid />
         <DisciplineSplit />
-        <UpcomingRunsCarousel />
+        <UpcomingRunsCarousel events={events} />
         <RunnerStories />
         <RecapsGrid />
-        <PartnersSection />
+        <PartnersSection partners={partners} />
         <JoinCtaBanner />
       </main>
 

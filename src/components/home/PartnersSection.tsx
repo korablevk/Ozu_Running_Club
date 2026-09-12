@@ -1,10 +1,12 @@
 import React from "react";
-import { PARTNERS } from "@/lib/data";
+import type { Partner } from "@/lib/data";
 import { ArrowUpRight, Tag, ShieldCheck } from "lucide-react";
 
-export function PartnersSection() {
-  const featuredPartner = PARTNERS.find((p) => p.name.includes("Runaway")) || PARTNERS[0];
-  const secondaryPartners = PARTNERS.filter((p) => p.id !== featuredPartner.id);
+export function PartnersSection({ partners = [] }: { partners?: Partner[] }) {
+  if (partners.length === 0) return null;
+
+  const featuredPartner = partners.find((p) => p.name.includes("Runaway")) || partners[0];
+  const secondaryPartners = partners.filter((p) => p.id !== featuredPartner.id);
 
   return (
     <section className="pt-12 pb-16 sm:pt-16 sm:pb-20 bg-canvas-subtle border-t border-neutral-200/60">
