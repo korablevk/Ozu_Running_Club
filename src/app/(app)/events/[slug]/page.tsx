@@ -15,10 +15,14 @@ import { EventDetailsRSVP } from "./EventDetailsRSVP";
 export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
-  const events = await getPublishedEvents();
-  return events.map((event) => ({
-    slug: event.slug,
-  }));
+  try {
+    const events = await getPublishedEvents();
+    return events.map((event) => ({
+      slug: event.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function EventDetailPage({
