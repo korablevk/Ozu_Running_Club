@@ -245,8 +245,23 @@ export interface ClubMember {
   studentId: string;
   phone: string;
   faculty: string;
+  studentRole?: ('undergraduate' | 'graduate' | 'alumni' | 'staff') | null;
   experienceLevel: 'beginner' | 'intermediate' | 'advanced';
+  preferredStreams?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  weeklyKmTarget?: string | null;
   motivation?: string | null;
+  /**
+   * Internal staff/board notes (not visible to applicant)
+   */
+  adminNotes?: string | null;
   status: 'pending' | 'active' | 'rejected' | 'inactive' | 'alumni';
   updatedAt: string;
   createdAt: string;
@@ -497,8 +512,12 @@ export interface ClubMembersSelect<T extends boolean = true> {
   studentId?: T;
   phone?: T;
   faculty?: T;
+  studentRole?: T;
   experienceLevel?: T;
+  preferredStreams?: T;
+  weeklyKmTarget?: T;
   motivation?: T;
+  adminNotes?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;

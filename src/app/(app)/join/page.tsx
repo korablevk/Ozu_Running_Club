@@ -8,7 +8,7 @@ import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Navigation, MessageCircle, Tag } from "lucide-react";
+import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Navigation, MessageCircle, Tag, AlertCircle } from "lucide-react";
 
 export default function JoinPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -25,6 +25,7 @@ export default function JoinPage() {
     motivation: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const toggleStream = (stream: string) => {
     setFormData((prev) => {
@@ -38,16 +39,36 @@ export default function JoinPage() {
     });
   };
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
     if (step < 3) {
       setStep((step + 1) as 2 | 3);
     } else if (step === 3) {
       setIsSubmitting(true);
-      setTimeout(() => {
+      try {
+        const res = await fetch("/api/join", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          setErrorMessage(result.error || "Failed to submit membership application. Please check your details.");
+          setIsSubmitting(false);
+          return;
+        }
+
         setIsSubmitting(false);
         setStep(4);
-      }, 700);
+      } catch (err) {
+        setErrorMessage("Network error occurred. Please check your internet connection and try again.");
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -317,12 +338,25 @@ export default function JoinPage() {
                   We leave no runner behind on any campus or city route.
                 </div>
 
+                {errorMessage && (
+                  <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <span className="font-bold block mb-0.5">Application Notice</span>
+                      <span>{errorMessage}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="pt-4 flex items-center justify-between">
                   <Button
                     type="button"
                     variant="outline"
                     size="default"
-                    onClick={() => setStep(2)}
+                    onClick={() => {
+                      setErrorMessage(null);
+                      setStep(2);
+                    }}
                     className="gap-2"
                   >
                     <ArrowLeft className="w-4 h-4" />
@@ -335,7 +369,7 @@ export default function JoinPage() {
                     disabled={isSubmitting}
                     className="font-extrabold text-sm sm:text-base tracking-tight shadow-md"
                   >
-                    {isSubmitting ? "Enrolling Member..." : "Submit Application & Join"}
+                    {isSubmitting ? "Submitting Application..." : "Submit Application & Join"}
                   </Button>
                 </div>
               </form>
@@ -349,13 +383,13 @@ export default function JoinPage() {
 
                 <div>
                   <span className="text-xs font-mono uppercase tracking-telemetry text-white bg-club-burgundy px-3 py-1 rounded-full font-bold">
-                    Official Welcome
+                    Application Received • Pending Verification
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-asphalt-black mt-3">
                     Welcome to the Pack, {formData.fullName.split(" ")[0]}!
                   </h2>
                   <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-md mx-auto leading-relaxed">
-                    Your membership application has been accepted. You are officially part of ÖzÜ Running Club!
+                    Your runner profile has been received and is pending enrollment verification by club leadership. In the meantime, join our student community chat below!
                   </p>
                 </div>
 
