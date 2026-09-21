@@ -1,9 +1,10 @@
 # Brand Refactor v0.2: ÖzÜ Running Club Visual Identity Specification
 
-**Status**: Implemented & Verified  
-**Branch**: `refactor/club-brand-v02`  
-**Target Reference**: Official Club Emblem (`logo.jpeg` & `logo2.jpeg`)  
-**Scope**: Non-destructive visual refactor — zero changes to data, routes, information architecture, dependencies, or backend.
+**Document Role:** Visual Identity Specification  
+**Status:** Implemented & Merged into `main` (`df64b95`)  
+**Current Project State:** [PROJECT_STATUS.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/PROJECT_STATUS.md)  
+**Target Reference:** Official Club Emblem (`logo.jpeg` & `logo2.jpeg`)  
+**Scope:** Non-destructive visual refactor — zero changes to data, routes, information architecture, dependencies, or backend.
 
 ---
 

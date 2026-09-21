@@ -1,4 +1,8 @@
-# Implementation Plan: ÖzÜ Running Club
+# Implementation Plan: ÖzÜ Running Club (Initial Baseline v0.1)
+
+**Document Role:** Historical Project Blueprint (Initial v0.1 Prototype)  
+**Status:** Superseded by [brand-refactor-v02.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/brand-refactor-v02.md), [editorial-hierarchy-polish-v0.3.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/editorial-hierarchy-polish-v0.3.md), and [backend-stabilization-production-readiness-v1-rc1.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/backend-stabilization-production-readiness-v1-rc1.md)  
+**Current Project State:** [PROJECT_STATUS.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/PROJECT_STATUS.md)  
 
 > **Core Objective**: Deliver a production-ready, mobile-first web application for Özyeğin University's Running Club, translating On.com's high-performance editorial aesthetic into an authentic running community hub.
 

@@ -1,7 +1,9 @@
 # ÖzÜ Running Club — Editorial & Hierarchy Polish v0.3
 
-**Status:** Implementation Plan  
-**Target branch:** `refactor/editorial-polish-v03`  
+**Document Role:** Implementation Specification (Design & Architecture)  
+**Status:** Implemented & Merged into `main` (`dc864a6`)  
+**Companion Report:** [editorial-polish-v03.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/editorial-polish-v03.md) (Baseline Audit & Implementation Report)  
+**Current Project State:** [PROJECT_STATUS.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/PROJECT_STATUS.md)  
 **Project:** ÖzÜ Running Club Website  
 **Primary goal:** Move the current website from a polished component-based sports template toward a more editorial, premium, running-culture experience without changing the existing product scope, demo content, routes, data, or brand palette.
 

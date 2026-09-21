@@ -1,8 +1,10 @@
 # ÖzÜ Running Club — Editorial & Hierarchy Polish v0.3: Baseline & Visual Audit Report
 
-**Branch:** `refactor/editorial-polish-v03`  
+**Document Role:** Implementation & Audit Report  
 **Date:** September 11, 2026  
-**Status:** Phase 0 Complete (Baseline Established & Documented)  
+**Status:** Audit Completed; Phases 1–6 Implemented & Merged into `main` (`dc864a6`)  
+**Specification Reference:** [editorial-hierarchy-polish-v0.3.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/editorial-hierarchy-polish-v0.3.md)  
+**Current Project State:** [PROJECT_STATUS.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/PROJECT_STATUS.md)  
 **Target URL:** `http://localhost:3000/`  
 
 ---

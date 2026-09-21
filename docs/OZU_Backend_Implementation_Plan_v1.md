@@ -1,8 +1,32 @@
 # ÖzÜ Running Club — Backend Implementation Plan v1.0
 
-**Status:** Planned  
+**Status:** Implemented — Pending Production Hardening (Superseded by RC1 Plan)  
+**Historical Specification Date:** September 2026  
 **Backend stack:** Next.js App Router + Payload CMS 3 + PostgreSQL  
 **Primary objective:** Convert the current frontend/demo prototype into a real club-management backend while preserving the existing public website UX and current product scope.
+
+---
+
+## Implementation Status — September 2026
+
+The original phases defined in this document have been substantially implemented on `main`, successfully integrating Payload CMS 3 and PostgreSQL into the Next.js App Router. However, critical hardening requirements (RSVP modal integration, concurrency-safe capacity locks, least-privilege RBAC, cloud media persistence, automated tests, and backup procedures) remain unresolved for production readiness.
+
+For the concise live state of the project, see [PROJECT_STATUS.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/PROJECT_STATUS.md).  
+For the stabilization and production release plan, see [backend-stabilization-production-readiness-v1-rc1.md](file:///Users/kirillkorablev/Desktop/Ozu_Running_club/Ozu_Running_wesite/docs/backend-stabilization-production-readiness-v1-rc1.md).
+
+### Original Backend Phases Status Matrix
+
+| Original Phase | Status | Summary of Evidence & Unresolved Items |
+| :--- | :---: | :--- |
+| **Phase 1 — Payload Foundation** | ✅ COMPLETE | Payload 3.89 embedded in App Router; PostgreSQL 16 containerized on port 5433; `Users` collection active. |
+| **Phase 2 — Collections + Media** | ⚠️ IMPLEMENTED BUT NEEDS CORRECTION | All 6 collections created and migrated. *Unresolved:* Media upload is bound to local disk (`public/media`); no S3/R2 cloud storage adapter. |
+| **Phase 3 — Seed + Read Integration** | ✅ COMPLETE | `src/scripts/seed.ts` is idempotent; `src/lib/dal.ts` serves published events and partners with derived live capacity to homepage and catalog. |
+| **Phase 4 — Join Backend** | ✅ COMPLETE | `POST /api/join` validates shape, normalizes identity, checks duplicate policies, and records pending `ClubMembers`. UI multi-step form integrated. |
+| **Phase 5 — RSVP Backend** | ⚠️ IMPLEMENTED BUT NEEDS CORRECTION | `POST /api/events/[slug]/rsvp` operational from event detail page. *Unresolved (P0):* `RSVPModal.tsx` on event cards still uses mock `setTimeout`; capacity calculation is not atomic under concurrency. |
+| **Phase 6 — Admin UX + Access Control**| 🟡 PARTIAL | Navigation grouped; default column sorts tailored; Users collection hidden for non-admins. *Unresolved:* Editor permissions over sensitive member PII and approval lifecycle require least-privilege scoping. |
+| **Release Gate** | 🔴 NOT STARTED | No automated test suite, no CI pipeline, hardcoded fallback secrets exist in config, no automated database backup/restore procedures. |
+
+---
 
 ## 0. Executive Architecture
 
