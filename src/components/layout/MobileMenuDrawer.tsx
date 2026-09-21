@@ -97,7 +97,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm font-semibold">
           <a
-            href="https://www.strava.com/clubs/ozu-running-club"
+            href="https://www.strava.com/clubs/2269492"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"

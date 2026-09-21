@@ -114,7 +114,7 @@ export function Footer() {
             </h4>
             <div className="space-y-3">
               <a
-                href="https://www.strava.com/clubs/ozu-running-club"
+                href="https://www.strava.com/clubs/2269492"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-3 bg-club-navy/40 rounded-lg hover:bg-club-navy/70 transition-colors border border-club-navy/60"

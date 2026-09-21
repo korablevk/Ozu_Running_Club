@@ -416,7 +416,7 @@ export default function JoinPage() {
                   </a>
 
                   <a
-                    href="https://www.strava.com/clubs/ozu-running-club"
+                    href="https://www.strava.com/clubs/2269492"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-5 bg-orange-50 rounded-2xl border border-orange-200 hover:bg-orange-100/70 transition-colors flex flex-col justify-between"

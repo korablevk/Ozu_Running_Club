@@ -385,7 +385,7 @@ export const RECENT_RECAPS: Recap[] = [
       author: "Derin K.",
       role: "Industrial Engineering, Class of '27",
     },
-    stravaClubLink: "https://www.strava.com/clubs/ozu-running-club",
+    stravaClubLink: "https://www.strava.com/clubs/2269492",
   },
   {
     id: "recap-sunset-track",
@@ -405,7 +405,7 @@ export const RECENT_RECAPS: Recap[] = [
       author: "Caner Y.",
       role: "Club Lead & Track Captain",
     },
-    stravaClubLink: "https://www.strava.com/clubs/ozu-running-club",
+    stravaClubLink: "https://www.strava.com/clubs/2269492",
   },
 ];
 

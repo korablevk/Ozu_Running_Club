@@ -77,7 +77,7 @@ export function DesktopHeader() {
         {/* Right Utilities & Actions */}
         <div className="flex items-center gap-4">
           <a
-            href="https://www.strava.com/clubs/ozu-running-club"
+            href="https://www.strava.com/clubs/2269492"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
