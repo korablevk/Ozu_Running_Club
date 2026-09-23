@@ -82,7 +82,20 @@ A verified inventory of all endpoints, database tables, collections, and compone
 
 ---
 
-### PHASE 1 — RSVP Flow Unification
+### PHASE 1 — RSVP Flow Unification — ✅ COMPLETED (2026-09-23)
+
+> **Implementation Artifacts**:
+> - `src/lib/useRSVP.ts` (shared RSVP mutation hook)
+> - `src/components/events/RSVPModal.tsx` (real backend wiring, error banner, waitlist UI)
+> - `src/app/(app)/events/[slug]/EventDetailsRSVP.tsx` (parity hook consumer)
+> - `src/lib/data.ts` (`CLUB_LINKS` centralized configuration)
+> - Commits: `9dd1345` (core refactor), `f15dfe6` (verified social and chat links)
+>
+> **Verification Summary**:
+> - Modal RSVP submission created real record in `event_registrations` (Murat Demir).
+> - Duplicate registration properly rejected with HTTP 409 and user-friendly inline notification.
+> - Verified in Payload Admin roster view (`/admin/collections/event-registrations`).
+> - `npm run type-check`: 0 errors.
 
 #### Objective
 Ensure every visible user-facing RSVP interface routes through the authoritative backend endpoint (`POST /api/events/[slug]/rsvp`).
@@ -124,8 +137,9 @@ A unified, shared RSVP mutation hook or utility that powers both `EventDetailsRS
 - Submit to full event from modal, verify waitlist confirmation displays.
 
 #### Acceptance Criteria
-- Zero mock `setTimeout` calls in any event or RSVP component.
-- All RSVP submissions create real records in `event_registrations`.
+- [x] Zero mock `setTimeout` calls in any event or RSVP component.
+- [x] All RSVP submissions create real records in `event_registrations`.
+- [x] Modal and detail pages have 100% parity in error handling, waitlist transitions, and calendar export.
 
 ---
 

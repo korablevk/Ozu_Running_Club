@@ -1,7 +1,7 @@
 # ÖzÜ Running Club — Project Status
 
-**Last Updated:** September 21, 2026  
-**Source of Truth:** Authoritative repository audit of `main` branch (`233d0ae`)  
+**Last Updated:** September 23, 2026  
+**Source of Truth:** Authoritative repository audit of `main` branch (`f15dfe6`)  
 **Main URL (Local Dev):** `http://localhost:3001` (Dev Port) / `http://localhost:3000` (Default Port)  
 **Admin URL (Local Dev):** `http://localhost:3001/admin`
 
@@ -15,7 +15,7 @@
 | **Brand Identity (v0.2)** | ✅ | Collegiate Navy/Plum/Burgundy/Crimson palette active across all views; slogan *WE MOVE TOGETHER.* integrated. |
 | **Editorial Polish (v0.3)** | ✅ | Asymmetric storytelling, photography-driven dispatch, refined section pacing and typography rhythm implemented. |
 | **Mobile & Responsive UX** | ✅ | Dedicated `MobileTopBar`, full-screen `MobileMenuDrawer`, and persistent `MobileBottomBar` verified across breakpoints. |
-| **Public RSVP Modal** | ⚠️ | `RSVPModal.tsx` (triggered from Event Cards on `/` and `/events`) uses a simulated `setTimeout()` rather than the real backend API. |
+| **Public RSVP Modal** | ✅ | Fully unified via `src/lib/useRSVP.ts`. Both `RSVPModal.tsx` and `EventDetailsRSVP.tsx` route directly through `POST /api/events/[slug]/rsvp`, handling confirmed status, waitlists, HTTP 409 duplicate rejection, and real calendar export. |
 
 ### Backend
 | Capability / Layer | Status | Notes |
@@ -60,7 +60,7 @@ Browser Client
   ├── Public Write Workflows
   │     ├── Join Form ─────────────► POST /api/join ───────────────► Payload Local API (overrideAccess) ──► ClubMembers
   │     ├── Event Detail RSVP ─────► POST /api/events/[slug]/rsvp ─► Payload Local API (overrideAccess) ──► EventRegistrations
-  │     └── Event Card Modal ──────► [DISCONNECTED: setTimeout] ──► (No backend write) ⚠️
+  │     └── Event Card Modal ──────► POST /api/events/[slug]/rsvp ─► Payload Local API (overrideAccess) ──► EventRegistrations (via useRSVP)
   │
   └── Administrative Control
         └── /admin ────────────────► Payload Admin UI ────────────► Collection Access Control ──────────► PostgreSQL 16
@@ -68,20 +68,19 @@ Browser Client
 
 ### Public Mutation Workflows
 1. **Join Submission**: `src/app/(app)/join/page.tsx` ➔ `POST /api/join` ➔ Normalization & validation ➔ Rate limit check (in-memory) ➔ Status duplicate policy check ➔ Creates `club-members` document with status `pending`.
-2. **Event Detail RSVP**: `src/app/(app)/events/[slug]/EventDetailsRSVP.tsx` ➔ `POST /api/events/[slug]/rsvp` ➔ Rate limit check ➔ Lifecycle & deadline check ➔ Non-atomic capacity count ➔ Creates `event-registrations` document with status `confirmed` or `waitlist`.
-3. **Card RSVP Modal (Disconnect)**: `src/components/events/EventCard.tsx` ➔ `src/components/events/RSVPModal.tsx` ➔ Simulates 600ms latency and triggers local success UI without making any network request.
+2. **Event Detail RSVP**: `src/app/(app)/events/[slug]/EventDetailsRSVP.tsx` ➔ `src/lib/useRSVP.ts` ➔ `POST /api/events/[slug]/rsvp` ➔ Rate limit check ➔ Lifecycle & deadline check ➔ Non-atomic capacity count ➔ Creates `event-registrations` document with status `confirmed` or `waitlist`.
+3. **Card RSVP Modal**: `src/components/events/EventCard.tsx` ➔ `src/components/events/RSVPModal.tsx` ➔ `src/lib/useRSVP.ts` ➔ `POST /api/events/[slug]/rsvp` ➔ Identical backend routing, duplicate rejection, and persistence.
 
 ---
 
 ## 3. Current Top Risks
 
 ### P0 (Critical — Functional & Data Invariant Blockers)
-1. **RSVP Modal Mock Simulation**:
-   - *Impact*: Any student registering via the "RSVP for Run" button on homepage or `/events` catalog receives a false confirmation. No database record is created.
-   - *Fix*: Refactor `RSVPModal.tsx` to submit to `POST /api/events/[slug]/rsvp` with full confirmation, waitlist, and error feedback.
+1. **[RESOLVED — Phase 1] RSVP Modal Mock Simulation**:
+   - *Status*: ✅ Resolved via `src/lib/useRSVP.ts`. Modal and detail views now use identical backend mutation logic and real PostgreSQL persistence.
 2. **Non-Atomic Event Capacity Check (Concurrency Race Condition)**:
    - *Impact*: Simultaneous requests for the final open slot both read `confirmedCount < maxParticipants`, resulting in `confirmedCount > maxParticipants` (overbooking beyond physical safety limits).
-   - *Fix*: Enforce database-level serializable isolation or row-level locking (`SELECT ... FOR UPDATE`) inside a transaction boundary.
+   - *Fix*: Enforce database-level serializable isolation or row-level locking (`SELECT ... FOR UPDATE`) inside a transaction boundary (Phase 2 target).
 
 ### P1 (High — Security, Persistence & Release Integrity)
 3. **Ephemeral Media Storage**:
