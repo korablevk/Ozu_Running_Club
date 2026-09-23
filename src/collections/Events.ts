@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { isAdmin, isAuthenticated } from "@/lib/access";
 
 export const Events: CollectionConfig = {
   slug: "events",
@@ -17,9 +18,9 @@ export const Events: CollectionConfig = {
         },
       };
     },
-    create: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => user?.role === "admin",
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAdmin,
   },
   fields: [
     {

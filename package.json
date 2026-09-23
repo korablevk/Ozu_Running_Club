@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "test:rbac": "tsx src/scripts/test-rbac-matrix.ts",
+    "test:capacity": "tsx src/scripts/test-capacity-concurrency.ts",
     "seed": "npx tsx src/scripts/seed.ts"
   },
   "dependencies": {

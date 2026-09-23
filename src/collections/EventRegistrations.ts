@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { APIError } from "payload";
+import { isAdmin, isAuthenticated, isAdminField } from "@/lib/access";
 
 export const EventRegistrations: CollectionConfig = {
   slug: "event-registrations",
@@ -10,15 +11,30 @@ export const EventRegistrations: CollectionConfig = {
   },
   defaultSort: "-createdAt",
   access: {
-    read: ({ req: { user } }) => Boolean(user),
-    create: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => user?.role === "admin",
+    read: isAuthenticated,
+    create: isAdmin,
+    update: isAuthenticated,
+    delete: isAdmin,
   },
   hooks: {
     beforeValidate: [
       async ({ data, req, operation, originalDoc }) => {
         if (!data) return data;
+
+        // RBAC constraint: Editors may only update attendance status ('attended' or 'no_show')
+        if (req.user?.role === "editor") {
+          if (operation === "create") {
+            throw new APIError("Editors cannot create registrations directly.", 403);
+          }
+          if (operation === "update" && data.status && originalDoc?.status && data.status !== originalDoc.status) {
+            if (data.status !== "attended" && data.status !== "no_show") {
+              throw new APIError(
+                "Editors are only authorized to mark attendance status (attended or no_show).",
+                403
+              );
+            }
+          }
+        }
 
         if (data.email && typeof data.email === "string") {
           data.email = data.email.trim().toLowerCase();
@@ -74,35 +90,56 @@ export const EventRegistrations: CollectionConfig = {
       relationTo: "events",
       required: true,
       index: true,
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "member",
       type: "relationship",
       relationTo: "club-members",
       index: true,
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "fullName",
       type: "text",
       required: true,
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "email",
       type: "email",
       required: true,
       index: true,
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "studentId",
       type: "text",
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "phone",
       type: "text",
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "paceGroup",
       type: "text",
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: "status",
@@ -120,3 +157,4 @@ export const EventRegistrations: CollectionConfig = {
     },
   ],
 };
+
