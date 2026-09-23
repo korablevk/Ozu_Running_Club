@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ClubLogo } from "@/components/ui/ClubLogo";
 import { X, ArrowUpRight, MessageCircle, Navigation } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/Icons";
+import { CLUB_LINKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 interface MobileMenuDrawerProps {
@@ -97,7 +98,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm font-semibold">
           <a
-            href="https://www.strava.com/clubs/2269492"
+            href={CLUB_LINKS.strava}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
@@ -107,7 +108,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             <ArrowUpRight className="w-3.5 h-3.5 ml-auto text-neutral-400" />
           </a>
           <a
-            href="https://instagram.com"
+            href={CLUB_LINKS.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
@@ -117,7 +118,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             <ArrowUpRight className="w-3.5 h-3.5 ml-auto text-neutral-400" />
           </a>
           <a
-            href="https://chat.whatsapp.com"
+            href={CLUB_LINKS.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             className="col-span-2 flex items-center gap-2 p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"

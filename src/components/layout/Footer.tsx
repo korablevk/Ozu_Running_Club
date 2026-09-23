@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Navigation, ShieldCheck, Heart } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/Icons";
 import { ClubLogo } from "@/components/ui/ClubLogo";
+import { CLUB_LINKS } from "@/lib/data";
 
 export function Footer() {
   return (
@@ -114,7 +115,7 @@ export function Footer() {
             </h4>
             <div className="space-y-3">
               <a
-                href="https://www.strava.com/clubs/2269492"
+                href={CLUB_LINKS.strava}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-3 bg-club-navy/40 rounded-lg hover:bg-club-navy/70 transition-colors border border-club-navy/60"
@@ -127,7 +128,7 @@ export function Footer() {
               </a>
 
               <a
-                href="https://instagram.com"
+                href={CLUB_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-3 bg-club-navy/40 rounded-lg hover:bg-club-navy/70 transition-colors border border-club-navy/60"

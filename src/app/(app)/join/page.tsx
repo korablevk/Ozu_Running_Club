@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { CheckCircle, ArrowRight, ArrowLeft, Sparkles, Navigation, MessageCircle, Tag, AlertCircle } from "lucide-react";
+import { CLUB_LINKS } from "@/lib/data";
 
 export default function JoinPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -396,7 +397,7 @@ export default function JoinPage() {
                 {/* Next Actions Box */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-xl mx-auto pt-2">
                   <a
-                    href="https://chat.whatsapp.com"
+                    href={CLUB_LINKS.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-5 bg-emerald-50 rounded-2xl border border-emerald-200 hover:bg-emerald-100/70 transition-colors flex flex-col justify-between"
@@ -416,7 +417,7 @@ export default function JoinPage() {
                   </a>
 
                   <a
-                    href="https://www.strava.com/clubs/2269492"
+                    href={CLUB_LINKS.strava}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-5 bg-orange-50 rounded-2xl border border-orange-200 hover:bg-orange-100/70 transition-colors flex flex-col justify-between"

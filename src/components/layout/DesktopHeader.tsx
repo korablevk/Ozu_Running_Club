@@ -7,6 +7,7 @@ import { ClubLogo } from "@/components/ui/ClubLogo";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
+import { CLUB_LINKS } from "@/lib/data";
 
 export function DesktopHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +78,7 @@ export function DesktopHeader() {
         {/* Right Utilities & Actions */}
         <div className="flex items-center gap-4">
           <a
-            href="https://www.strava.com/clubs/2269492"
+            href={CLUB_LINKS.strava}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(

@@ -3,7 +3,7 @@
 import React from "react";
 import { X, CheckCircle, Clock, Calendar, Download, ArrowRight, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { RunningEvent } from "@/lib/data";
+import { RunningEvent, CLUB_LINKS } from "@/lib/data";
 import { useRSVP } from "@/lib/useRSVP";
 
 interface RSVPModalProps {
@@ -246,7 +246,7 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
                 </span>
                 Get real-time weather updates and pacer announcements prior to the run.
                 <a
-                  href="https://chat.whatsapp.com"
+                  href={CLUB_LINKS.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-emerald-600 font-bold mt-2 hover:underline"

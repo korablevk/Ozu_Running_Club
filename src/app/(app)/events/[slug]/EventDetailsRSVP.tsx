@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { RunningEvent } from "@/lib/data";
+import { RunningEvent, CLUB_LINKS } from "@/lib/data";
 import { Button } from "@/components/ui/Button";
 import { CheckCircle, Calendar, Download, ArrowRight, ShieldCheck, AlertCircle, Clock } from "lucide-react";
 import { useRSVP } from "@/lib/useRSVP";
@@ -210,7 +210,7 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
             </span>
             Real-time weather, locker locations, and pacer updates:
             <a
-              href="https://chat.whatsapp.com"
+              href={CLUB_LINKS.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-emerald-600 font-bold mt-2 hover:underline"
