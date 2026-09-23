@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPayload } from "payload";
 import configPromise from "@/payload.config";
 import { rateLimit } from "@/lib/rateLimit";
+import { executeAtomicRSVP, RSVPServiceError } from "@/lib/rsvpService";
 
 export async function POST(
   req: NextRequest,
@@ -148,33 +149,7 @@ export async function POST(
       validPaceGroup = paceGroup || "Open Pace";
     }
 
-    // 5. Duplicate active registration check
-    const existingRegistration = await payload.find({
-      collection: "event-registrations",
-      where: {
-        and: [
-          { event: { equals: event.id } },
-          { email: { equals: normalizedEmail } },
-          { status: { not_equals: "cancelled" } },
-        ],
-      },
-      limit: 1,
-      overrideAccess: true,
-    });
-
-    if (existingRegistration.docs.length > 0) {
-      const currentReg = existingRegistration.docs[0];
-      return NextResponse.json(
-        {
-          error: `You already have an active registration (${currentReg.status}) for this event.`,
-          code: "DUPLICATE_REGISTRATION",
-          status: currentReg.status,
-        },
-        { status: 409 }
-      );
-    }
-
-    // 6. Optional member linking
+    // 5. Optional member linking
     const memberQuery = await payload.find({
       collection: "club-members",
       where: {
@@ -186,67 +161,53 @@ export async function POST(
 
     const linkedMemberId = memberQuery.docs.length > 0 ? memberQuery.docs[0].id : undefined;
 
-    // 7. Capacity calculation (atomicity & waitlist resolution)
-    // Confirmed occupancy is derived from registrations with status 'confirmed' or 'attended'
-    const confirmedQuery = await payload.find({
-      collection: "event-registrations",
-      where: {
-        and: [
-          { event: { equals: event.id } },
-          {
-            or: [
-              { status: { equals: "confirmed" } },
-              { status: { equals: "attended" } },
-            ],
-          },
-        ],
-      },
-      limit: 0,
-      overrideAccess: true,
+    // 6. Atomic, transaction-safe RSVP execution
+    // Uses row-level exclusive lock on the events record to eliminate concurrency race conditions.
+    const pool = (payload.db as any).pool;
+    const result = await executeAtomicRSVP({
+      pool,
+      eventId: Number(event.id),
+      memberId: linkedMemberId ? Number(linkedMemberId) : null,
+      fullName: normalizedFullName,
+      email: normalizedEmail,
+      studentId: normalizedStudentId || null,
+      phone: normalizedPhone || null,
+      paceGroup: validPaceGroup,
     });
 
-    const confirmedCount = confirmedQuery.totalDocs;
-    const maxCapacity = typeof event.maxParticipants === "number" ? event.maxParticipants : 40;
-    const resolvedStatus = confirmedCount < maxCapacity ? "confirmed" : "waitlist";
-
-    // 8. Create registration record
-    const createdRegistration = await payload.create({
-      collection: "event-registrations",
-      overrideAccess: true,
-      data: {
-        event: event.id,
-        member: linkedMemberId,
-        fullName: normalizedFullName,
-        email: normalizedEmail,
-        studentId: normalizedStudentId || undefined,
-        phone: normalizedPhone || undefined,
-        paceGroup: validPaceGroup,
-        status: resolvedStatus,
-      },
-    });
-
-    // 9. Return confirmation response
+    // 7. Return confirmation response
     return NextResponse.json(
       {
         success: true,
-        status: resolvedStatus,
+        status: result.status,
         message:
-          resolvedStatus === "confirmed"
-            ? `RSVP Confirmed! You are registered for ${event.title}.`
-            : `Event is at full capacity (${maxCapacity}/${maxCapacity}). You have been added to the priority waitlist.`,
+          result.status === "confirmed"
+            ? `RSVP Confirmed! You are registered for ${result.eventTitle}.`
+            : `Event is at full capacity (${result.maxCapacity}/${result.maxCapacity}). You have been added to the priority waitlist.`,
         data: {
-          id: createdRegistration.id,
-          status: resolvedStatus,
-          eventTitle: event.title,
-          eventDate: event.date,
-          meetingPoint: event.meetingPoint,
+          id: result.registrationId,
+          status: result.status,
+          eventTitle: result.eventTitle,
+          eventDate: result.eventDate,
+          meetingPoint: result.meetingPoint,
           paceGroup: validPaceGroup,
-          spotsRemaining: Math.max(0, maxCapacity - (confirmedCount + (resolvedStatus === "confirmed" ? 1 : 0))),
+          spotsRemaining: result.spotsRemaining,
         },
       },
       { status: 201 }
     );
   } catch (error: any) {
+    if (error instanceof RSVPServiceError) {
+      return NextResponse.json(
+        {
+          error: error.message,
+          code: error.code,
+          ...(error.registrationStatus ? { status: error.registrationStatus } : {}),
+        },
+        { status: error.statusCode }
+      );
+    }
+
     console.error("Error processing event RSVP:", error);
     return NextResponse.json(
       {
