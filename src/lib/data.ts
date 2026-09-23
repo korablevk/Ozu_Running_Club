@@ -436,3 +436,13 @@ export const PARTNERS: Partner[] = [
     perkDescription: "Joint weekend trail loops, route maintenance, and regional trail race discounts.",
   },
 ];
+
+export const CLUB_LINKS = {
+  strava: "https://www.strava.com/clubs/2269492",
+  whatsapp: "https://chat.whatsapp.com/HR7a3KvwlxxGnNb1F0OoAk?s=cl&p=i&mlu=0&ilr=4",
+  instagram: "https://www.instagram.com/ozyeginrun/",
+  tiktok: "https://www.tiktok.com/@ozurunningclub?_r=1&_t=zs-99xcdbhkasw",
+  applicationForm:
+    "https://docs.google.com/forms/d/e/1FAIpQLSeEMIKQlrvj8cfWjjzuqpYeu9Wz2gt8klnkuT3Mx42un1lS3A/viewform?usp=header&pli=1&authuser=0",
+} as const;
+

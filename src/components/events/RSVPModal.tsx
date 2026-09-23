@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { X, CheckCircle, Calendar, Download, ArrowRight } from "lucide-react";
+import React from "react";
+import { X, CheckCircle, Clock, Calendar, Download, ArrowRight, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { RunningEvent } from "@/lib/data";
-import { generateGoogleCalendarUrl, generateIcsData } from "@/lib/utils";
+import { useRSVP } from "@/lib/useRSVP";
 
 interface RSVPModalProps {
   event: RunningEvent;
@@ -13,59 +13,31 @@ interface RSVPModalProps {
 }
 
 export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
-  const [step, setStep] = useState<"form" | "confirmed">("form");
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    studentId: "",
-    phone: "",
-    paceGroup: event.paceGroups[0]?.name || "Group B",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    step,
+    rsvpStatus,
+    errorMessage,
+    formData,
+    setFormData,
+    isSubmitting,
+    handleSubmit,
+    downloadIcs,
+    googleCalUrl,
+    reset,
+  } = useRSVP(event);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate instantaneous local API response
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setStep("confirmed");
-    }, 600);
+  const handleClose = () => {
+    reset();
+    onClose();
   };
-
-  const downloadIcs = () => {
-    const icsContent = generateIcsData({
-      title: event.title,
-      description: `${event.subtitle}\nMeeting at: ${event.meetingPoint}\nTarget Pace: ${event.targetPace}`,
-      location: event.meetingPoint,
-      startDate: event.date,
-      durationMinutes: event.estimatedDurationMin,
-    });
-    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `${event.slug}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const googleCalUrl = generateGoogleCalendarUrl({
-    title: event.title,
-    description: `${event.subtitle}\nMeeting at: ${event.meetingPoint}\nTarget Pace: ${event.targetPace}`,
-    location: event.meetingPoint,
-    startDate: event.date,
-    durationMinutes: event.estimatedDurationMin,
-  });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-neutral-200">
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-neutral-200 max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-6 border-b border-neutral-100">
+        <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-telemetry text-neutral-500 font-semibold">
               Event Registration • RSVP
@@ -75,7 +47,7 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
             </h3>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-9 h-9 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-500 hover:text-asphalt-black hover:bg-neutral-200 transition-colors"
           >
             <X className="w-5 h-5" />
@@ -83,7 +55,7 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6">
+        <div className="p-6 overflow-y-auto">
           {step === "form" ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200/80 flex items-center justify-between text-xs font-mono">
@@ -143,33 +115,59 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
 
               <div>
                 <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                  Choose Your Pace Pack *
+                  Phone / WhatsApp
                 </label>
-                <div className="space-y-2">
-                  {event.paceGroups.map((pg) => (
-                    <label
-                      key={pg.name}
-                      className={`flex items-center justify-between p-3 rounded-xl border text-sm cursor-pointer transition-all ${
-                        formData.paceGroup === pg.name
-                          ? "border-club-navy bg-club-navy/5 ring-1 ring-club-navy"
-                          : "border-neutral-200 hover:border-neutral-300"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <input
-                          type="radio"
-                          name="paceGroup"
-                          checked={formData.paceGroup === pg.name}
-                          onChange={() => setFormData({ ...formData, paceGroup: pg.name })}
-                          className="w-4 h-4 text-club-navy accent-club-navy"
-                        />
-                        <span className="font-semibold text-ink">{pg.name}</span>
-                      </div>
-                      <span className="text-xs font-mono text-neutral-500">{pg.pace}</span>
-                    </label>
-                  ))}
-                </div>
+                <input
+                  type="tel"
+                  placeholder="+90 5XX XXX XX XX"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-sm focus:border-asphalt-black focus:ring-1 focus:ring-asphalt-black outline-none transition-all"
+                />
               </div>
+
+              {event.paceGroups && event.paceGroups.length > 0 && (
+                <div>
+                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                    Choose Your Pace Pack *
+                  </label>
+                  <div className="space-y-2">
+                    {event.paceGroups.map((pg) => (
+                      <label
+                        key={pg.name}
+                        className={`flex items-center justify-between p-3 rounded-xl border text-sm cursor-pointer transition-all ${
+                          formData.paceGroup === pg.name
+                            ? "border-club-navy bg-club-navy/5 ring-1 ring-club-navy"
+                            : "border-neutral-200 hover:border-neutral-300"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <input
+                            type="radio"
+                            name="paceGroup"
+                            checked={formData.paceGroup === pg.name}
+                            onChange={() => setFormData({ ...formData, paceGroup: pg.name })}
+                            className="w-4 h-4 text-club-navy accent-club-navy"
+                          />
+                          <span className="font-semibold text-ink">{pg.name}</span>
+                        </div>
+                        <span className="text-xs font-mono text-neutral-500">{pg.pace}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Registration Error / Notice Banner */}
+              {errorMessage && (
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2.5 animate-in fade-in duration-200">
+                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <span className="font-bold block mb-0.5">Registration Notice</span>
+                    <span>{errorMessage}</span>
+                  </div>
+                </div>
+              )}
 
               <div className="pt-3">
                 <Button
@@ -187,21 +185,40 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
             </form>
           ) : (
             <div className="text-center py-4 space-y-5">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                <CheckCircle className="w-8 h-8" />
-              </div>
+              {rsvpStatus === "confirmed" ? (
+                <>
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                    <CheckCircle className="w-8 h-8" />
+                  </div>
 
-              <div>
-                <h4 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black">
-                  You are on the list, {formData.fullName.split(" ")[0]}!
-                </h4>
-                <p className="text-sm text-neutral-600 mt-2 max-w-sm mx-auto">
-                  We have saved your spot for <span className="font-semibold text-asphalt-black">{event.title}</span>. 
-                  Meet at <span className="font-semibold text-asphalt-black">{event.meetingPoint}</span> at {event.time}.
-                </p>
-              </div>
+                  <div>
+                    <h4 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black">
+                      You are on the list, {formData.fullName.split(" ")[0]}!
+                    </h4>
+                    <p className="text-sm text-neutral-600 mt-2 max-w-sm mx-auto">
+                      We have saved your spot for <span className="font-semibold text-asphalt-black">{event.title}</span>. 
+                      Meet at <span className="font-semibold text-asphalt-black">{event.meetingPoint}</span> at {event.time}.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                    <Clock className="w-8 h-8" />
+                  </div>
 
-              {/* Action Buttons */}
+                  <div>
+                    <h4 className="text-2xl font-bold font-sans tracking-tight text-asphalt-black">
+                      Added to Waitlist!
+                    </h4>
+                    <p className="text-sm text-neutral-600 mt-2 max-w-sm mx-auto">
+                      This session is currently at full capacity. You are registered on the priority waitlist and will be notified if a spot opens up.
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {/* Calendar Action Buttons */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <a
                   href={googleCalUrl}
@@ -242,7 +259,7 @@ export function RSVPModal({ event, isOpen, onClose }: RSVPModalProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={onClose}
+                onClick={handleClose}
                 className="w-full text-xs font-bold"
               >
                 Close & Return to Site

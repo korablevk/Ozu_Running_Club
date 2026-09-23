@@ -1,80 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { RunningEvent } from "@/lib/data";
 import { Button } from "@/components/ui/Button";
 import { CheckCircle, Calendar, Download, ArrowRight, ShieldCheck, AlertCircle, Clock } from "lucide-react";
-import { generateGoogleCalendarUrl, generateIcsData } from "@/lib/utils";
+import { useRSVP } from "@/lib/useRSVP";
 
 export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
-  const [step, setStep] = useState<"form" | "confirmed">("form");
-  const [rsvpStatus, setRsvpStatus] = useState<"confirmed" | "waitlist">("confirmed");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    studentId: "",
-    phone: "",
-    paceGroup: event.paceGroups[0]?.name || "Group B",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMessage(null);
-
-    try {
-      const res = await fetch(`/api/events/${event.slug}/rsvp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        setErrorMessage(result.error || "Failed to submit RSVP. Please try again.");
-        setIsSubmitting(false);
-        return;
-      }
-
-      setRsvpStatus(result.status || "confirmed");
-      setIsSubmitting(false);
-      setStep("confirmed");
-    } catch (err) {
-      setErrorMessage("Network error occurred. Please check your internet connection and try again.");
-      setIsSubmitting(false);
-    }
-  };
-
-  const downloadIcs = () => {
-    const icsContent = generateIcsData({
-      title: event.title,
-      description: `${event.subtitle}\nMeeting at: ${event.meetingPoint}\nTarget Pace: ${event.targetPace}`,
-      location: event.meetingPoint,
-      startDate: event.date,
-      durationMinutes: event.estimatedDurationMin,
-    });
-    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `${event.slug}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const googleCalUrl = generateGoogleCalendarUrl({
-    title: event.title,
-    description: `${event.subtitle}\nMeeting at: ${event.meetingPoint}\nTarget Pace: ${event.targetPace}`,
-    location: event.meetingPoint,
-    startDate: event.date,
-    durationMinutes: event.estimatedDurationMin,
-  });
+  const {
+    step,
+    rsvpStatus,
+    errorMessage,
+    formData,
+    setFormData,
+    isSubmitting,
+    handleSubmit,
+    downloadIcs,
+    googleCalUrl,
+  } = useRSVP(event);
 
   return (
     <div className="bg-white rounded-2xl p-6 sm:p-8 border border-neutral-200 shadow-xl">
@@ -147,38 +90,40 @@ export function EventDetailsRSVP({ event }: { event: RunningEvent }) {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-              Select Pace Pack *
-            </label>
-            <div className="space-y-2">
-              {event.paceGroups.map((pg) => (
-                <label
-                  key={pg.name}
-                  className={`flex items-center justify-between p-3 rounded-xl border text-sm cursor-pointer transition-all ${
-                    formData.paceGroup === pg.name
-                      ? "border-asphalt-black bg-neutral-50 ring-1 ring-asphalt-black"
-                      : "border-neutral-200 hover:border-neutral-300"
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="paceGroupInline"
-                      checked={formData.paceGroup === pg.name}
-                      onChange={() => setFormData({ ...formData, paceGroup: pg.name })}
-                      className="w-4 h-4 text-asphalt-black"
-                    />
-                    <span className="font-semibold text-asphalt-black">{pg.name}</span>
-                  </div>
-                  <span className="text-xs font-mono text-neutral-500">{pg.pace}</span>
-                </label>
-              ))}
+          {event.paceGroups && event.paceGroups.length > 0 && (
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Select Pace Pack *
+              </label>
+              <div className="space-y-2">
+                {event.paceGroups.map((pg) => (
+                  <label
+                    key={pg.name}
+                    className={`flex items-center justify-between p-3 rounded-xl border text-sm cursor-pointer transition-all ${
+                      formData.paceGroup === pg.name
+                        ? "border-asphalt-black bg-neutral-50 ring-1 ring-asphalt-black"
+                        : "border-neutral-200 hover:border-neutral-300"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="paceGroupInline"
+                        checked={formData.paceGroup === pg.name}
+                        onChange={() => setFormData({ ...formData, paceGroup: pg.name })}
+                        className="w-4 h-4 text-asphalt-black"
+                      />
+                      <span className="font-semibold text-asphalt-black">{pg.name}</span>
+                    </div>
+                    <span className="text-xs font-mono text-neutral-500">{pg.pace}</span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2.5">
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2.5 animate-in fade-in duration-200">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div className="flex-1">
                 <span className="font-bold block mb-0.5">Registration Notice</span>
