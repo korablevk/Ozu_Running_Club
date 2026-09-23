@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { isAdmin, isAuthenticated } from "@/lib/access";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -33,9 +34,9 @@ export const Media: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => user?.role === "admin",
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAdmin,
   },
   fields: [
     {

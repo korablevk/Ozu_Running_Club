@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { APIError } from "payload";
+import { isAdmin, isAuthenticated, isAdminField } from "@/lib/access";
 
 export const ClubMembers: CollectionConfig = {
   slug: "club-members",
@@ -10,10 +11,10 @@ export const ClubMembers: CollectionConfig = {
   },
   defaultSort: "-createdAt",
   access: {
-    read: ({ req: { user } }) => Boolean(user),
-    create: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => user?.role === "admin",
+    read: isAuthenticated,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   hooks: {
     beforeValidate: [
@@ -102,11 +103,19 @@ export const ClubMembers: CollectionConfig = {
       type: "text",
       required: true,
       index: true,
+      access: {
+        read: isAdminField,
+        update: isAdminField,
+      },
     },
     {
       name: "phone",
       type: "text",
       required: true,
+      access: {
+        read: isAdminField,
+        update: isAdminField,
+      },
     },
     {
       name: "faculty",
@@ -153,6 +162,10 @@ export const ClubMembers: CollectionConfig = {
       admin: {
         description: "Internal staff/board notes (not visible to applicant)",
       },
+      access: {
+        read: isAdminField,
+        update: isAdminField,
+      },
     },
     {
       name: "status",
@@ -160,6 +173,9 @@ export const ClubMembers: CollectionConfig = {
       required: true,
       defaultValue: "pending",
       index: true,
+      access: {
+        update: isAdminField,
+      },
       options: [
         { label: "Pending Approval", value: "pending" },
         { label: "Active Member", value: "active" },
