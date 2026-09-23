@@ -199,52 +199,37 @@ Atomic capacity evaluation and insertion within a PostgreSQL transaction boundar
 
 ---
 
-### PHASE 3 — RBAC Hardening
+### PHASE 3 — RBAC Hardening ✅ [COMPLETE]
 
 #### Objective
 Enforce the principle of least privilege across all collections and API endpoints for Anonymous, Editor, and Admin roles.
 
-#### Why It Matters
-Normal content editors currently possess overly broad update permissions on `ClubMembers` (including student IDs, phone numbers, and approval status). Privileged actions must be strictly partitioned.
+#### Implementation & Verification Summary (Completed)
+- **Reusable Access Layer (`src/lib/access.ts`)**: Standardized `isAdmin`, `isAuthenticated`, `isAdminOrSelf`, and `isAdminField` helpers.
+- **ClubMembers Protection**:
+  - Direct read restricted to authenticated users.
+  - Sensitive PII fields (`studentId`, `phone`, `adminNotes`) masked from non-admins via `isAdminField`.
+  - Membership lifecycle updates (`status`) and deletions locked to Admin (`isAdminField` / `isAdmin`).
+- **EventRegistrations Protection**:
+  - Attendee identity fields (`fullName`, `email`, `studentId`, `phone`, `paceGroup`, `event`, `member`) locked from update by non-admins.
+  - Editor permissions strictly scoped to attendance recording (`attended`, `no_show`) via `beforeValidate` hook. Unauthorized promotion or cancellation blocked with 403 Forbidden.
+- **Universal Delete Lockdown**:
+  - Deletion of `Events`, `Partners`, `Media`, `ClubMembers`, `EventRegistrations`, and `Users` restricted exclusively to `admin`.
+- **Automated Verification Harness**:
+  - `src/scripts/test-rbac-matrix.ts` (`npm run test:rbac`): 41/41 least-privilege assertions pass with 100% reliability across Anonymous, Editor, and Admin roles.
+  - Public registration regression verified: `/api/join` and `/api/events/[slug]/rsvp` succeed (HTTP 201).
 
-#### Current Problem
-Collection-level access rules rely on coarse `Boolean(user)` checks for read/create/update. Field-level restrictions and separation between Content Editing and Membership/Staff Administration are incomplete.
-
-#### Target State
+#### Target State (Verified)
 A formal, tested RBAC matrix:
 
 | Collection | Anonymous | Editor | Admin |
 | :--- | :--- | :--- | :--- |
 | **Users** | No access | Read own profile only (`id === user.id`); hidden from admin UI | Full CRUD; manage roles and staff accounts |
-| **ClubMembers** | No direct access (Join via `/api/join`) | Read operational summary (name, experience, stream); **cannot** view studentId/phone; **cannot** approve/reject members | Full CRUD; approve/reject members; view full PII; edit admin notes |
-| **EventRegistrations** | No direct access (RSVP via API) | Read registrations; update attendance (`attended`, `no_show`); **cannot** delete | Full CRUD; manage status; delete |
+| **ClubMembers** | No direct access (Join via `/api/join`) | Read operational summary (name, experience, stream); **cannot** view studentId/phone/notes; **cannot** approve/reject members | Full CRUD; approve/reject members; view full PII; edit admin notes |
+| **EventRegistrations** | No direct access (RSVP via API) | Read registrations; update attendance (`attended`, `no_show`); **cannot** tamper with attendee identity or waitlist | Full CRUD; manage status; delete |
 | **Events** | Read published events | Full CRUD on event content; publish/unpublish; **cannot** delete | Full CRUD; delete |
 | **Partners** | Read published partners | Full CRUD on partner content; upload logos; **cannot** delete | Full CRUD; delete |
 | **Media** | Read media files | Upload & update media assets; **cannot** delete | Full CRUD; delete |
-
-#### Scope
-- Implement field-level access control on `ClubMembers` (`studentId`, `phone`, `status`, `adminNotes`).
-- Restrict member status mutation (`pending` ➔ `active` / `rejected`) to `role === "admin"`.
-- Ensure Payload Local API calls on behalf of users respect context authorization.
-- Verify direct REST endpoints (`/api/club-members`, `/api/event-registrations`) enforce role boundaries.
-
-#### Out of Scope
-- Custom third-party identity providers or OAuth.
-
-#### Dependencies
-- Phase 0 baseline verification.
-
-#### Risks
-- Breaking legitimate admin workflows if field-level permissions hide required UI inputs.
-
-#### Verification Strategy
-- Automated RBAC test script verifying HTTP status codes and returned JSON fields for Anonymous, Editor, and Admin tokens across all collections.
-
-#### Acceptance Criteria
-- Editors cannot view member student IDs or phone numbers.
-- Editors cannot alter member status (`pending` to `active`).
-- Admins retain full operational authority.
-- Hard delete is universally blocked for non-admins.
 
 ---
 

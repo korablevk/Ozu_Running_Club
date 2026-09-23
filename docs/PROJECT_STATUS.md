@@ -21,12 +21,12 @@
 | Capability / Layer | Status | Notes |
 | :--- | :---: | :--- |
 | **Payload Foundation** | ✅ | Payload CMS 3.89.0 embedded in Next.js 15 App Router; initialized with PostgreSQL adapter. |
-| **Collections & Schema** | ⚠️ | 6 collections configured (`Users`, `Media`, `Events`, `ClubMembers`, `EventRegistrations`, `Partners`), but field-level security and atomic locking hooks are absent. |
+| **Collections & Schema** | ✅ | 6 collections configured (`Users`, `Media`, `Events`, `ClubMembers`, `EventRegistrations`, `Partners`) with strict field-level security, least-privilege RBAC, and atomic database constraints. |
 | **Database Reads (DAL)** | ✅ | `src/lib/dal.ts` queries published events and partners via Payload Local API; derives real-time capacity and waitlist metrics dynamically. |
 | **Join Workflow** | ✅ | `POST /api/join` enforces payload limits, input validation, identity normalization, duplicate protection, and creates `pending` members. |
 | **RSVP Workflow** | ✅ | Fully atomic and transaction-safe via `src/lib/rsvpService.ts`. Uses PostgreSQL row-level locking (`SELECT ... FOR UPDATE`) and partial unique index. Zero capacity overbooking under concurrent burst load. |
 | **Admin Panel UX** | ✅ | Grouped navigation (`Activities & Events`, `Community`, `Media & Assets`, `Administration`) with tailored default column views. |
-| **Role-Based Access (RBAC)**| 🟡 | Basic Admin vs Editor roles implemented; Editor delete blocked and Users collection hidden, but Editor has overly broad access to sensitive member PII and approval status. |
+| **Role-Based Access (RBAC)**| ✅ | Strict least-privilege matrix enforced across all collections. Member PII (student ID, phone, staff notes) and approval transitions restricted to Admin; Editor permissions scoped to event operations (attendance marking) and content; universal hard delete lockdown for non-admins; automated suite `test:rbac` (41/41 passing). |
 
 ### Infrastructure & Operations
 | Component / Area | Status | Notes |
@@ -81,17 +81,16 @@ Browser Client
    - *Status*: ✅ Resolved via `src/lib/useRSVP.ts`. Modal and detail views now use identical backend mutation logic and real PostgreSQL persistence.
 2. **[RESOLVED — Phase 2] Non-Atomic Event Capacity Check (Concurrency Race Condition)**:
    - *Status*: ✅ Resolved via `src/lib/rsvpService.ts` and PostgreSQL partial unique index `event_registrations_active_unique_idx`. Invariant `confirmedCount <= maxParticipants` verified with 10 concurrent requests; duplicate burst test verified with 100% reliability.
+3. **[RESOLVED — Phase 3] Overly Permissive Editor RBAC on Member PII & Roster Tampering**:
+   - *Status*: ✅ Resolved via `@/lib/access` helper functions, field-level access (`isAdminField`), collection access rules, and `beforeValidate` attendance hooks. Editor cannot view sensitive member PII (student ID, phone, admin notes), cannot mutate member status, cannot alter attendee identity or emails, and cannot delete any entity. Verified via `npm run test:rbac` with 41 passing assertions.
 
 ### P1 (High — Security, Persistence & Release Integrity)
-3. **Ephemeral Media Storage**:
+4. **Ephemeral Media Storage**:
    - *Impact*: Images uploaded via `/admin` are saved to local filesystem (`public/media`). In containerized or VPS deployments without persistent mounts, redeploys erase all uploaded media.
    - *Fix*: Implement persistent S3-compatible cloud storage (Cloudflare R2 recommended).
-4. **Hardcoded Secrets & Insecure Fallbacks**:
+5. **Hardcoded Secrets & Insecure Fallbacks**:
    - *Impact*: `src/payload.config.ts` and `docker-compose.yml` contain fallback secrets (`8f83c18c7e92384a6b29d891b988f910`, `ozu_running_secret`). If deployed without environment variables, the system runs with compromised defaults.
    - *Fix*: Implement fail-fast validation in production (`process.exit(1)` if `PAYLOAD_SECRET` or `DATABASE_URI` are missing or default).
-5. **Overly Permissive Editor RBAC on Member PII**:
-   - *Impact*: Any account with `editor` role can read and update all `ClubMembers` records (including student IDs, personal phone numbers, and approval status), violating least privilege.
-   - *Fix*: Scope Editor permissions to content/events/partners; reserve member PII and approval transitions to Admin.
 6. **Zero Automated Test Coverage**:
    - *Impact*: No automated unit, integration, or regression tests exist in the repository. Schema or route regressions can only be caught manually.
    - *Fix*: Establish an automated integration test suite covering Join, RSVP, capacity invariants, and RBAC.
