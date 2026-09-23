@@ -143,7 +143,21 @@ A unified, shared RSVP mutation hook or utility that powers both `EventDetailsRS
 
 ---
 
-### PHASE 2 — Transaction-Safe Capacity
+### PHASE 2 — Transaction-Safe Capacity — ✅ COMPLETED (2026-09-23)
+
+> **Implementation Artifacts**:
+> - `src/lib/rsvpService.ts` (atomic transactional RSVP mutation with `SELECT ... FOR UPDATE` row lock)
+> - `src/migrations/20260923_140000_event_registrations_unique_active.ts` (PostgreSQL partial unique index `event_registrations_active_unique_idx`)
+> - `src/app/(app)/api/events/[slug]/rsvp/route.ts` (refactored to delegate to `executeAtomicRSVP`)
+> - `src/scripts/test-capacity-concurrency.ts` (automated concurrency verification harness)
+> - Commit: `a339735`
+>
+> **Verification Summary**:
+> - 10 simultaneous concurrent requests against an event with `maxParticipants = 1` produced **exactly 1 confirmed** and **9 waitlist** responses.
+> - Database verified: `confirmedCount = 1`, `waitlist = 9`. Zero overbooking.
+> - 5 simultaneous duplicate requests with identical email produced **1 success** and **4 rejected with HTTP 409 DUPLICATE_REGISTRATION**.
+> - Database verified: Exactly 1 record persisted for the duplicate email.
+> - `npm run type-check`: 0 errors.
 
 #### Objective
 Guarantee the core capacity invariant: `confirmed occupancy <= event.maxParticipants` under concurrent requests.
@@ -179,8 +193,9 @@ Atomic capacity evaluation and insertion within a PostgreSQL transaction boundar
 - Verify that exactly 1 registration is `confirmed` and `N - 1` registrations are `waitlist`.
 
 #### Acceptance Criteria
-- Concurrency test passes with 100% reliability.
-- Invariant `confirmedCount <= maxParticipants` holds under all concurrent burst loads.
+- [x] Concurrency test passes with 100% reliability.
+- [x] Invariant `confirmedCount <= maxParticipants` holds under all concurrent burst loads.
+- [x] Database partial unique constraint blocks race-condition duplicate inserts at the engine level.
 
 ---
 

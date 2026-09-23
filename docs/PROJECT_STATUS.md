@@ -1,7 +1,7 @@
 # ÖzÜ Running Club — Project Status
 
 **Last Updated:** September 23, 2026  
-**Source of Truth:** Authoritative repository audit of `main` branch (`f15dfe6`)  
+**Source of Truth:** Authoritative repository audit of `main` branch (`a339735`)  
 **Main URL (Local Dev):** `http://localhost:3001` (Dev Port) / `http://localhost:3000` (Default Port)  
 **Admin URL (Local Dev):** `http://localhost:3001/admin`
 
@@ -24,7 +24,7 @@
 | **Collections & Schema** | ⚠️ | 6 collections configured (`Users`, `Media`, `Events`, `ClubMembers`, `EventRegistrations`, `Partners`), but field-level security and atomic locking hooks are absent. |
 | **Database Reads (DAL)** | ✅ | `src/lib/dal.ts` queries published events and partners via Payload Local API; derives real-time capacity and waitlist metrics dynamically. |
 | **Join Workflow** | ✅ | `POST /api/join` enforces payload limits, input validation, identity normalization, duplicate protection, and creates `pending` members. |
-| **RSVP Workflow** | ⚠️ | `POST /api/events/[slug]/rsvp` operational from event detail page, but capacity evaluation is non-atomic (race condition under concurrency). |
+| **RSVP Workflow** | ✅ | Fully atomic and transaction-safe via `src/lib/rsvpService.ts`. Uses PostgreSQL row-level locking (`SELECT ... FOR UPDATE`) and partial unique index. Zero capacity overbooking under concurrent burst load. |
 | **Admin Panel UX** | ✅ | Grouped navigation (`Activities & Events`, `Community`, `Media & Assets`, `Administration`) with tailored default column views. |
 | **Role-Based Access (RBAC)**| 🟡 | Basic Admin vs Editor roles implemented; Editor delete blocked and Users collection hidden, but Editor has overly broad access to sensitive member PII and approval status. |
 
@@ -76,11 +76,11 @@ Browser Client
 ## 3. Current Top Risks
 
 ### P0 (Critical — Functional & Data Invariant Blockers)
+> *All P0 critical blockers are now resolved and verified!*
 1. **[RESOLVED — Phase 1] RSVP Modal Mock Simulation**:
    - *Status*: ✅ Resolved via `src/lib/useRSVP.ts`. Modal and detail views now use identical backend mutation logic and real PostgreSQL persistence.
-2. **Non-Atomic Event Capacity Check (Concurrency Race Condition)**:
-   - *Impact*: Simultaneous requests for the final open slot both read `confirmedCount < maxParticipants`, resulting in `confirmedCount > maxParticipants` (overbooking beyond physical safety limits).
-   - *Fix*: Enforce database-level serializable isolation or row-level locking (`SELECT ... FOR UPDATE`) inside a transaction boundary (Phase 2 target).
+2. **[RESOLVED — Phase 2] Non-Atomic Event Capacity Check (Concurrency Race Condition)**:
+   - *Status*: ✅ Resolved via `src/lib/rsvpService.ts` and PostgreSQL partial unique index `event_registrations_active_unique_idx`. Invariant `confirmedCount <= maxParticipants` verified with 10 concurrent requests; duplicate burst test verified with 100% reliability.
 
 ### P1 (High — Security, Persistence & Release Integrity)
 3. **Ephemeral Media Storage**:
